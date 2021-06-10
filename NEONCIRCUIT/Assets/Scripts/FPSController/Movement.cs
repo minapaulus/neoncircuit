@@ -46,8 +46,11 @@ public class Movement : MonoBehaviour
         }
 
         // use relative coordinates to move in the direction the camera is facing
-        Vector3 moveDirection = transform.right * x + transform.forward * (z + dash * dashVelocity);
-        controller.Move(moveDirection * movementSpeed * Time.deltaTime);
+        Vector3 moveDirection = transform.right * x + transform.forward * z;
+        // normalize to avoid moving at double speed when moving both vertically and horizontally
+        moveDirection.Normalize();
+        moveDirection = movementSpeed * moveDirection + transform.forward * dashVelocity * dash;
+        controller.Move(moveDirection * Time.deltaTime);
 
         // jumping
         if(Input.GetButtonDown("Jump"))
@@ -65,7 +68,7 @@ public class Movement : MonoBehaviour
             }
         }
 
-        // f = 0.5 * g * t^2
+        // v = 0.5 * g * t^2
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
