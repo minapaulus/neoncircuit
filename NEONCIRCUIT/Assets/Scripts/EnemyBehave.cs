@@ -7,6 +7,7 @@ public class EnemyBehave : MonoBehaviour
     public AttackPattern attack;
     public MovementPattern Move;
     public GameObject[] Weapon;
+    private GameObject[] obstacles;
 
     private GameObject PlayerTarget; 
 
@@ -14,18 +15,18 @@ public class EnemyBehave : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+
     }
 
     // Update is called once per frame
     void Update()
     {
         if (PlayerTarget == null) return;
-        if (Move) Move.Execute(transform, PlayerTarget.transform);
+        if (Move) Move.Execute(transform, PlayerTarget.transform, obstacles);
 
         if (attack && Weapon.Length > 0) {
             if ((Time.time - lastfired) > (1.0/attack.Attackspeed)) {
-                Debug.Log("Hello");
                 attack.Execute(transform, PlayerTarget.transform, Weapon, PlayerTarget);
                 lastfired = Time.time;
             }
