@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehave : MonoBehaviour
+public class TurretBehaviour : MonoBehaviour
 {
     public AttackPattern attack;
     public MovementPattern Move;
@@ -23,7 +23,7 @@ public class EnemyBehave : MonoBehaviour
     void Update()
     {
         if (PlayerTarget == null) return;
-        if (Move) Move.Execute(transform, PlayerTarget.transform, obstacles);
+        if (Move) Move.Execute(transform, PlayerTarget.transform, obstacles, null);
 
         if (attack && Weapon.Length > 0) {
             if ((Time.time - lastfired) > (1.0/attack.Attackspeed)) {

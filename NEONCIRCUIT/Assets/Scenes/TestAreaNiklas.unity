@@ -19834,7 +19834,7 @@ NavMeshObstacle:
   m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
   m_Carve: 1
-  m_CarveOnlyStationary: 1
+  m_CarveOnlyStationary: 0
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
 --- !u!1001 &1503683245
@@ -24558,6 +24558,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 717934651251755159, guid: 6b7b302b83b4aed49bffdbc4ca7c4f8c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 717934651251755178, guid: 6b7b302b83b4aed49bffdbc4ca7c4f8c, type: 3}
+      propertyPath: m_Radius
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 717934651251755179, guid: 6b7b302b83b4aed49bffdbc4ca7c4f8c, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -24601,6 +24609,14 @@ PrefabInstance:
     - target: {fileID: 717934651251755179, guid: 6b7b302b83b4aed49bffdbc4ca7c4f8c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544840965933296631, guid: 6b7b302b83b4aed49bffdbc4ca7c4f8c, type: 3}
+      propertyPath: HP
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544840965933296631, guid: 6b7b302b83b4aed49bffdbc4ca7c4f8c, type: 3}
+      propertyPath: fleeHP
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b7b302b83b4aed49bffdbc4ca7c4f8c, type: 3}
@@ -26703,6 +26719,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC
       objectReference: {fileID: 0}
+    - target: {fileID: 717934651251755178, guid: 6b7b302b83b4aed49bffdbc4ca7c4f8c, type: 3}
+      propertyPath: m_Radius
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 717934651251755179, guid: 6b7b302b83b4aed49bffdbc4ca7c4f8c, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -26747,5 +26767,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8544840965933296631, guid: 6b7b302b83b4aed49bffdbc4ca7c4f8c, type: 3}
+      propertyPath: HP
+      value: 100
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 717934651251755177, guid: 6b7b302b83b4aed49bffdbc4ca7c4f8c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6b7b302b83b4aed49bffdbc4ca7c4f8c, type: 3}
