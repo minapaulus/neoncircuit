@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Playerstats : MonoBehaviour
-{   
+{
+    //public Camera playerCamera;
+
     public float HP = 100;
     private float HPmax;
     public Image HPCount;
