@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &510548406077844083
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 107495349195303476}
+  m_Layer: 0
+  m_Name: Weapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &107495349195303476
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510548406077844083}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.673}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 717934651251755179}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &717934651251755159
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,8 +42,8 @@ GameObject:
   - component: {fileID: 717934651251755156}
   - component: {fileID: 717934651251755157}
   - component: {fileID: 717934651251755158}
-  - component: {fileID: 717934651251755177}
   - component: {fileID: 717934651251755178}
+  - component: {fileID: 8544840965933296631}
   - component: {fileID: 717934651251755176}
   m_Layer: 0
   m_Name: NPC
@@ -32,7 +62,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -42.01, y: 1.34, z: -4.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 107495349195303476}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -99,21 +130,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &717934651251755177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 717934651251755159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c97577fa6667be945abd75decdc0e155, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attack: {fileID: 0}
-  Move: {fileID: 11400000, guid: 71eb4316e5adf714899bd725ac23744f, type: 2}
-  Weapon: []
 --- !u!135 &717934651251755178
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -127,6 +143,29 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8544840965933296631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717934651251755159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2c7729871a6b414086ddee8fc63c905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: 28.66
+  LifeReg: 10
+  fleeHP: 30
+  attack: {fileID: 11400000, guid: cd7eae024d82c5a49a203092b1fde2f4, type: 2}
+  Rush: {fileID: 11400000, guid: 90517005e6cd3cb498ae24cc77e05846, type: 2}
+  Aim: {fileID: 11400000, guid: 1bf6a80c23e0b634a881431527011c65, type: 2}
+  Flee: {fileID: 11400000, guid: 86f5fd4a0fbeaef4d887fb13c0bf2862, type: 2}
+  Weapon:
+  - {fileID: 510548406077844083}
+  isRdy: 1
+  isAttacking: 0
 --- !u!195 &717934651251755176
 NavMeshAgent:
   m_ObjectHideFlags: 0

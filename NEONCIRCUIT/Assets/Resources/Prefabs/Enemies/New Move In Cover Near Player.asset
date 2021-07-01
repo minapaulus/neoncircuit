@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65da72ba760b55548bb0c3b9a3e131ed, type: 3}
-  m_Name: New Movein Range Or Cover
+  m_Script: {fileID: 11500000, guid: f6596ed382609a54abe1c5ed5e1bbd00, type: 3}
+  m_Name: New Move In Cover Near Player
   m_EditorClassIdentifier: 
-  minDistance: 5.27
-  maxDistanceObstacle: 0
+  minDistance: 3.9
+  maxDistanceObstacle: 20
   rotationSpeed: 10
-  needsCover: 1
+  isInCover: 1
   isAttacking: 0
   obsDistance: 1
