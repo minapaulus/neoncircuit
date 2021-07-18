@@ -27,6 +27,7 @@ public class MoveInRange : MovementPattern
         pos = target.position;
         if (!((me.position - pos).magnitude > minDistance))
         {
+            Debug.Log((me.position - pos).magnitude);
             //Add artificial rotation, as the target is not the player from the view of the agent.
             var q = Quaternion.LookRotation(target.position - me.position);
             me.rotation = Quaternion.Lerp(me.rotation, q, Time.deltaTime * rotationSpeed);

@@ -16,6 +16,7 @@ public class RushingEnemyBehaviour : MonoBehaviour
     public MoveInRange Rush;
     public MovementPattern Aim;
     public MoveInCoverNearPlayer Flee;
+    //additionally the first weapon should be the one with which the enemy aims at the player. We check if there is a clear line of sight before attacking.
     public GameObject[] Weapon;
     private GameObject[] obstacles;
 
@@ -46,6 +47,7 @@ public class RushingEnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(_agent.velocity.magnitude);
         if (HP <= 0) Die();
         if (_playerTarget == null) return;
 
@@ -101,7 +103,7 @@ public class RushingEnemyBehaviour : MonoBehaviour
     {
         RaycastHit hit;
         var rayDir = Weapon[0].transform.forward;
-        if (Physics.Raycast(this.transform.position, rayDir, out hit))
+        if (Physics.Raycast(Weapon[0].transform.position, rayDir, out hit))
         {
             if (hit.transform == _playerTarget.transform) return true;
             else return false;
