@@ -37,7 +37,7 @@ public class RushingEnemyBehaviour : MonoBehaviour
     void Start()
     {
         obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        _myMat = GetComponent<Renderer>().material;
+        _myMat = transform.GetChild(0).GetComponent<Renderer>().material;
         _init = _myMat.GetColor("_EmissionColor");
         _agent = GetComponent<NavMeshAgent>();
 

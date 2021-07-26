@@ -9,6 +9,7 @@ public class SimpleShoot : AttackPattern
     public float Lifetime = 50;
     public float startOffset = 5;
     public float velocity = 1000;
+    public float stickiness = 1f;
     private int weaponindice = 0;
 
 
@@ -25,6 +26,8 @@ public class SimpleShoot : AttackPattern
             stats.GetComponent<Rigidbody>().AddForce(stats.transform.forward * velocity);
             stats.lifetime = Lifetime;
             stats.targetID = Target.tag;
+            stats.corrector = stickiness;
+            stats.target = target;
             stats.source = me.gameObject;
             weaponindice = (weaponindice + 1) % 2;
         }
