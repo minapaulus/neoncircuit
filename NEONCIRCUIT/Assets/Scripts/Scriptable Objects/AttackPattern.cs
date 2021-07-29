@@ -7,5 +7,5 @@ public abstract class AttackPattern : ScriptableObject
     public float Attackspeed;
 
 
-    public abstract void Execute(Transform me, Transform target, GameObject[] Weapon, GameObject Target);
+    public abstract void Execute(Transform me, Transform target, GameObject[] Weapon, GameObject Target, Color Hpindic);
 }

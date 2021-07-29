@@ -30,6 +30,7 @@ public class Projectile : MonoBehaviour
     {
         var direction = this.transform.position - target.position;
         var newdir = this.transform.forward - direction;
+        newdir.Normalize();
         GetComponent<Rigidbody>().AddForce(newdir* corrector * Time.deltaTime);
     }
 

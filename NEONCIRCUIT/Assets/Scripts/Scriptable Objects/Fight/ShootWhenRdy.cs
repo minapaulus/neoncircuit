@@ -14,7 +14,7 @@ public class ShootWhenRdy : AttackPattern
     public float minFightingDistance = 5;
     // uses only one weapon!
 
-    public override void Execute(Transform me, Transform target, GameObject[] Weapon, GameObject Target)
+    public override void Execute(Transform me, Transform target, GameObject[] Weapon, GameObject Target, Color HPIndic)
     {
         for (int i = 0; i < Weapon.Length; i++)
         {
@@ -25,6 +25,7 @@ public class ShootWhenRdy : AttackPattern
             var spawn = Instantiate(Projectile, pos, angle);
             var stats = spawn.GetComponentInChildren<Projectile>();
             stats.GetComponent<Rigidbody>().AddForce(stats.transform.forward * velocity);
+            stats.GetComponent<Renderer>().material.SetColor("_EmissionColor", HPIndic);
             stats.lifetime = Lifetime;
             stats.targetID = Target.tag;
             stats.corrector = stickiness;

@@ -13,7 +13,7 @@ public class SimpleShoot : AttackPattern
     private int weaponindice = 0;
 
 
-    public override void Execute(Transform me, Transform target, GameObject[] Weapon, GameObject Target)
+    public override void Execute(Transform me, Transform target, GameObject[] Weapon, GameObject Target, Color HPIndic)
     {
         // Projectile ausrichten
         //foreach (GameObject o in Weapon)
@@ -24,6 +24,7 @@ public class SimpleShoot : AttackPattern
             var spawn = Instantiate(Projectile, pos, angle);
             var stats = spawn.GetComponentInChildren<Projectile>();
             stats.GetComponent<Rigidbody>().AddForce(stats.transform.forward * velocity);
+            stats.GetComponent<Renderer>().material.SetColor("_EmissionColor", HPIndic);
             stats.lifetime = Lifetime;
             stats.targetID = Target.tag;
             stats.corrector = stickiness;

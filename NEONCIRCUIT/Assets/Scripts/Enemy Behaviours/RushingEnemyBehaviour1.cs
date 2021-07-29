@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RushingEnemyBehaviour1 : MonoBehaviour
+public class RushingEnemyBehaviour1 : Enemy
 {
-    public float HP = 100f;
+    //public float HP = 100f;
     [Range(0, 100)]
     public float LifeReg = 10f;
     private bool _isRegenerating = false;
@@ -24,8 +24,8 @@ public class RushingEnemyBehaviour1 : MonoBehaviour
     private GameObject[] obstacles;
 
     private GameObject _playerTarget;
-    private Material _myMat = null;
-    private Color _init = Color.red;
+    //private Material _myMat = null;
+    //private Color _init = Color.red;
 
     //Ausgelagert
     public bool isRdy = true;
@@ -37,11 +37,10 @@ public class RushingEnemyBehaviour1 : MonoBehaviour
 
     private float _lastfired = 0;
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        _myMat = materialReference.GetComponent<Renderer>().material;
-        _init = _myMat.GetColor("_EmissionColor");
         _agent = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
 
@@ -49,35 +48,36 @@ public class RushingEnemyBehaviour1 : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        _anim.SetFloat("speed", _agent.velocity.magnitude);
-        if (HP <= 0) Die();
+        base.Update();
+        //if (base.healthPoints <= 0) Die();
         if (_playerTarget == null) return;
+        _anim.SetFloat("speed", _agent.velocity.magnitude);
 
         // Color only the material of the selected object.
-        Color HPindic = _init * (HP / 100f);
-        _myMat.SetColor("_EmissionColor", HPindic);
+        //Color HPindic = _init * (base.healthPoints / 100f);
+        //_myMat.SetColor("_EmissionColor", HPindic);
 
         //Wenn der Gegner Angreifen kann und nicht in Cover ist -> Attack
         if (attack && Weapon.Length > 0)
         {
             if ((Time.time - _lastfired) > (1.0 / attack.Attackspeed) && (transform.position - _playerTarget.transform.position).magnitude <= attack.minFightingDistance && PlayerInSight())
             {
-                Debug.Log("I CAN ATTACK");
+                //Debug.Log("I CAN ATTACK");
                 // With isAttacking we tell our NPC to rotate until he is looking directly at the Player.
                 
                 //RayCast
                 if (LookAtPlayer())
                 {
-                    Debug.Log("I Initiate ATTACK");
+                   // Debug.Log("I Initiate ATTACK");
                     _anim.SetBool("isAttacking", true);
                     if (_anim.GetCurrentAnimatorStateInfo(0).IsName("Attacking") &&
                         _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= .6f)
                     {
                         _agent.isStopped = false;
-                        Debug.Log("here we are");
-                        attack.Execute(transform, _playerTarget.transform, Weapon, _playerTarget);
+                        //Debug.Log("here we are");
+                        attack.Execute(transform, _playerTarget.transform, Weapon, _playerTarget, base.HPindic);
                         _lastfired = Time.time;
                         isAttacking = false;
                         _anim.SetBool("isAttacking", false);
@@ -90,25 +90,25 @@ public class RushingEnemyBehaviour1 : MonoBehaviour
 
         //When do you need to rush and when do you need to take cover?
 
-        if (Rush && HP > fleeHP && !isAttacking) {
+        if (Rush && base.healthPoints > fleeHP && !isAttacking) {
             _agent.isStopped = false;
             Rush.Execute(transform, _playerTarget.transform, obstacles, _agent);
         }
-        Debug.Log((Weapon[0].transform.position - _playerTarget.transform.position).magnitude);
-        if ((Aim && HP > fleeHP && isAttacking)) {
+        //Debug.Log((Weapon[0].transform.position - _playerTarget.transform.position).magnitude);
+        if ((Aim && base.healthPoints > fleeHP && isAttacking)) {
             _agent.isStopped = true;
             Aim.Execute(transform, _playerTarget.transform, obstacles, _agent); }
 
 
-        if (Flee && (HP <= fleeHP || _isRegenerating)) {
+        if (Flee && (base.healthPoints <= fleeHP || _isRegenerating)) {
             Flee.Execute(transform, _playerTarget.transform, obstacles, _agent);
             if (Flee.isInCover)
             {
-                HP += LifeReg * Time.deltaTime;
+                base.healthPoints += LifeReg * Time.deltaTime;
                 _isRegenerating = true;
-                if (HP >= 100)
+                if (base.healthPoints >= 100)
                 {
-                    HP = 100;
+                    base.healthPoints = 100;
                     _isRegenerating = false;
                 }
                 //prevent Actions except regenerating
@@ -156,11 +156,6 @@ public class RushingEnemyBehaviour1 : MonoBehaviour
             {
                 _playerTarget = other.gameObject;
             }
-        }
-
-        public void Damage(float dmg)
-        {
-            HP -= dmg;
         }
     }
 

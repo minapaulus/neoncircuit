@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 4659173301940717845}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,5 +158,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 0
+  corrector: 0
   targetID: 
   source: {fileID: 0}
+  target: {fileID: 0}
+  Velocity: 0

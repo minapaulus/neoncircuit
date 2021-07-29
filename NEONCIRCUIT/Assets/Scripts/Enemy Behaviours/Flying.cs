@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Flying : MonoBehaviour
+public class Flying : Enemy
 {
-    public float HP = 100f;
+    //public float HP = 100f;
 
     public ShootWhenRdy attack;
-    public AttackPattern support;
+    public Support support;
     public MovementPattern move;
 
     private Animator _anim;
@@ -21,11 +21,16 @@ public class Flying : MonoBehaviour
     public GameObject[] weapons;
 
     private GameObject _playerTarget;
-    private Material _myMat = null;
-    private Color _init = Color.red;
+    //private Material _myMat = null;
+    //private Color _init = Color.red;
 
-    //Ausgelagert
-    public bool isRdy = true;
+    //It should priotize supporting. Changes priorization if there are no friends near, or if he lost health equal or greater than AggressionThreshold.
+    public bool prioSupport = true;
+    private bool _supportTriggered = false;
+    public float maxSupportRange = 30f;
+    public float aggressionThreshold = 40f; 
+    private List<GameObject> Enemies = new List<GameObject>();
+    private GameObject[] _nearest = { null, null };
     public bool isAttacking = false;
     //TODO: Raycast
 
@@ -34,60 +39,77 @@ public class Flying : MonoBehaviour
 
     private float _lastfired = 0;
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        _myMat = transform.GetChild(0).GetComponent<Renderer>().material;
-        _init = _myMat.GetColor("_EmissionColor");
+        base.Start();
         _agent = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
+        _anim.SetFloat("Exhaust-Speed", 1 / downtime);
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            if (obj.name != this.name)
+            {
+                Enemies.Add(obj);
+            }
+        }
+        //Debug.Log(Enemies.Count);
 
 
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         //Debug.Log(_agent.velocity.magnitude);
-        if (HP <= 0) Die();
         if (_playerTarget == null) return;
 
-        // Color only the material of the selected object.
-        Color HPindic = _init * (HP / 100f);
-        _myMat.SetColor("_EmissionColor", HPindic);
-
+        if (prioSupport && support && Enemies.Count > 0)
+        {
+            //Check if there are enemies which it can support. If not change priosupport.
+            CheckForDeath();
+            if (EnemiesinRange())
+            {
+                if (!_supportTriggered)
+                {
+                    _agent.isStopped = true;
+                    _anim.SetTrigger("Support");
+                    _supportTriggered = true;
+                }
+                if (_anim.GetCurrentAnimatorStateInfo(0).IsName("Supporting"))
+                {
+                    //Debug.Log("Execute Support");
+                    support.Execute(this.transform, null, _nearest, null, Color.red);
+                }
+            }
+            else
+            {
+                if (_anim.GetCurrentAnimatorStateInfo(0).IsName("Supporting"))
+                {
+                    _anim.SetTrigger("end-support");
+                    support.EndSupport(_nearest);
+                }
+                prioSupport = false;
+            }
+        }
+        else _supportTriggered = false;
+    
         //If the enemy is in range and has an initial clear FOV, he will initiate the attack. First a wind up animation is played and if it is finished the attack will commence while an attack rotation animation will be played.
         // after each Attack or Support move a short downtime is applied, so the player can breath.
  
-        if (attack && weapons.Length > 0)
+        if (!prioSupport && attack && weapons.Length > 0)
         {
-            Debug.Log("Not seen");
-            /*
-            if ((Time.time - _lastfired) > (1.0 / attack.Attackspeed) && (transform.position - _playerTarget.transform.position).magnitude <= attack.minFightingDistance && PlayerInSight())
-            {
-                Debug.Log("I CAN ATTACK");
-                // With isAttacking we tell our NPC to rotate until he is looking directly at the Player.
-                isAttacking = true;
-                //RayCast
-                if (LookAtPlayer())
-                {
-                    Debug.Log("I ATTACK");
-                    attack.Execute(transform, _playerTarget.transform, Weapon, _playerTarget);
-                    _lastfired = Time.time;
-                    isAttacking = false;
-                }
-            }
-            else isAttacking = false;
-            
-            */
             // Initiate Attack the player, if no Attack has yet been initiated
-            if (!isAttacking && (transform.position - _playerTarget.transform.position).magnitude <= attack.minFightingDistance && PlayerInSight())
-            {
-                _agent.isStopped = true;
-                isAttacking = true;
-                _anim.SetTrigger("Attack");
-                _atktimer = 0f;
+            if (!isAttacking) {
+                 if ((transform.position - _playerTarget.transform.position).magnitude <= attack.minFightingDistance && PlayerInSight())
+                    {
+                        _agent.isStopped = true;
+                        isAttacking = true;
+                        _anim.SetTrigger("Attack");
+                        _atktimer = 0f;
 
-            }
+                    }
+                }
             else
             {
                 //if Attack is already initiated wait till the windup is over
@@ -101,7 +123,7 @@ public class Flying : MonoBehaviour
                         if ((Time.time - _lastfired) > (1.0 / attack.Attackspeed))
                         {
                             _lastfired = Time.time;
-                            attack.Execute(this.transform, _playerTarget.transform, weapons, _playerTarget);
+                            attack.Execute(this.transform, _playerTarget.transform, weapons, _playerTarget, base.HPindic);
                         }
                     }
                     else
@@ -119,7 +141,7 @@ public class Flying : MonoBehaviour
 
 
         /* If no attack or support move is being performed, the agent has to move to the player or get into range. */
-        if (move && !isAttacking && _anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if (!_supportTriggered && move && !isAttacking && _anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             _agent.isStopped = false;
             move.Execute(transform, _playerTarget.transform, null, _agent);
@@ -129,6 +151,42 @@ public class Flying : MonoBehaviour
 
     }
 
+    private void CheckForDeath()
+    {
+        foreach(GameObject en in Enemies)
+        {
+            if(en == null)
+            {
+                Enemies.Remove(en);
+            }
+        }
+    }
+
+    private bool EnemiesinRange()
+    {
+        // we search for the two nearest Enemies. If they are nearer than our MaxSupportRange, then we will trigger support.
+        if (Enemies.Count < 2) return false;
+        Enemies.Sort(SortByDistanceToMe);
+        /*foreach(GameObject enem in Enemies)
+        {
+            Debug.Log((enem.transform.position - transform.position).magnitude);
+        }*/
+        _nearest[0] = Enemies[0]; 
+        _nearest[1] = Enemies[1]; 
+
+
+        if(_nearest[0] != null && _nearest[1] != null && (_nearest[0].transform.position - this.transform.position).magnitude < maxSupportRange && (_nearest[1].transform.position - this.transform.position).magnitude < maxSupportRange){ 
+            return true; 
+        } else return false;
+    }
+
+    int SortByDistanceToMe(GameObject a, GameObject b)
+    {
+        float squaredRangeA = (a.transform.position - transform.position).sqrMagnitude;
+        float squaredRangeB = (b.transform.position - transform.position).sqrMagnitude;
+        return squaredRangeA.CompareTo(squaredRangeB);
+    }
+
     private bool PlayerInSight()
     {
         RaycastHit hit;
@@ -136,18 +194,12 @@ public class Flying : MonoBehaviour
         if (Physics.Raycast(this.transform.position, rayDir, out hit))
         {
             if (hit.transform == _playerTarget.transform) {
-                Debug.Log("In sight");
+               // Debug.Log("In sight");
                 return true; }
             else return false;
         }
         else return false;
     }
-
-    private void Die()
-        {
-            // Only Destroy for now. Later a shader animation
-            Destroy(this.gameObject);
-        }
 
 
         //Beim eintreten den Spieler als Target auswählen.
@@ -159,9 +211,5 @@ public class Flying : MonoBehaviour
             }
         }
 
-        public void Damage(float dmg)
-        {
-            HP -= dmg;
-        }
     }
 
