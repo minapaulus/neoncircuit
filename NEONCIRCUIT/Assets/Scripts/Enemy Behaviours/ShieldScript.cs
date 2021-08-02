@@ -10,29 +10,41 @@ public class ShieldScript : MonoBehaviour
     public GameObject shield;
     public Animator shieldanim;
     private bool _activated = false;
-    private Transform _protector = null;
+    private GameObject _protector = null;
 
-    public void Update()
+    protected void Update()
     {   if (_activated && _protector != null) {
-            var direction = shield.transform.position - _protector.position;
-            shield.transform.LookAt(_protector.position);
+            var direction = shield.transform.position - _protector.transform.position;
+            shield.transform.LookAt(_protector.transform.position);
                 }
     }
 
 
     public void Activate(Transform protector)
     {
-        shield.SetActive(true);
-        shieldanim.SetTrigger("Activate");
-        _protector = protector;
-        _activated = true;
+        if (!_activated && _protector == null)
+        {
+            ////Debug.Log(protector.gameObject.name);
+            _activated = true;
+            shield.SetActive(true);
+            shieldanim.SetTrigger("Activate");
+            _protector = protector.gameObject;
+        }
     }
 
-    public void DeActivate()
+    public void DeActivate(Transform protector)
     {
-        shield.SetActive(false);
-        shieldanim.SetTrigger("DeActivate");
-        _protector = null;
-        _activated = false;
+        if (_protector == protector.gameObject)
+        {
+            _activated = false;
+            shield.SetActive(false);
+            shieldanim.SetTrigger("DeActivate");
+            _protector = null;
+        }
+    }
+
+    public bool getActivation()
+    {
+        return _activated;
     }
 }

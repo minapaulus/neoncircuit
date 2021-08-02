@@ -5,9 +5,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float healthPoints = 100f;
+    public float initialHP;
 
 
-    public enum AssignedColors { Color1, Color2, Color3};
+    public enum AssignedColors { Color1, Color2, Color3, Color4};
     protected Color HPindic;
 
     public Renderer[] ren;
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour
     // Every Renderer with a Neoncolor must be assigned publicly. Including circles and so forth.
     protected virtual void Start()
     {
+        initialHP = healthPoints;
         switch (assignedColor)
         {
             case AssignedColors.Color1:

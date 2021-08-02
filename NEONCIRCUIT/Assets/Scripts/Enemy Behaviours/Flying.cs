@@ -11,6 +11,7 @@ public class Flying : Enemy
     public ShootWhenRdy attack;
     public Support support;
     public MovementPattern move;
+    private ShieldScript _shieldScript;
 
     private Animator _anim;
     public float atkDuration = 15f;
@@ -25,11 +26,12 @@ public class Flying : Enemy
     //private Color _init = Color.red;
 
     //It should priotize supporting. Changes priorization if there are no friends near, or if he lost health equal or greater than AggressionThreshold.
-    public bool prioSupport = true;
+    private bool _prioSupport = true;
     private bool _supportTriggered = false;
     public float maxSupportRange = 30f;
     public float aggressionThreshold = 40f; 
     private List<GameObject> Enemies = new List<GameObject>();
+    private List<GameObject> _trackedObjects = new List<GameObject>();
     private GameObject[] _nearest = { null, null };
     public bool isAttacking = false;
     //TODO: Raycast
@@ -52,6 +54,7 @@ public class Flying : Enemy
                 Enemies.Add(obj);
             }
         }
+        _shieldScript = GetComponent<ShieldScript>();
         //Debug.Log(Enemies.Count);
 
 
@@ -64,7 +67,9 @@ public class Flying : Enemy
         //Debug.Log(_agent.velocity.magnitude);
         if (_playerTarget == null) return;
 
-        if (prioSupport && support && Enemies.Count > 0)
+        _prioSupport = CheckForPrioSupport();
+
+        if (_prioSupport && support && Enemies.Count > 0)
         {
             //Check if there are enemies which it can support. If not change priosupport.
             CheckForDeath();
@@ -79,17 +84,45 @@ public class Flying : Enemy
                 if (_anim.GetCurrentAnimatorStateInfo(0).IsName("Supporting"))
                 {
                     //Debug.Log("Execute Support");
-                    support.Execute(this.transform, null, _nearest, null, Color.red);
+                    //support.Execute(this.transform, null, _nearest, null, Color.red);
+
+                    foreach (GameObject friend in _nearest)
+                    {
+                        if (!_trackedObjects.Contains(friend))
+                        {
+                            _trackedObjects.Add(friend);
+                            //everything normal. But they have not yet been registered.
+                            if (_trackedObjects.Count <= 2)
+                            {
+                                //Debug.Log(friend.name);
+                                support.StartSupportOne(friend, this.transform);
+                            }
+                            // Here, we have the case that a new friend is nearer than one who is being protected. In this case, we activate the new near friend and deactivate the far one.
+                            else
+                            {
+                                //support.Execute(this.transform, null, _nearest, null, Color.red);
+                                support.StartSupportOne(friend, this.transform);
+                                _trackedObjects.Sort(SortByDistanceToMe);
+                                GameObject _toDeactivate = _trackedObjects[_trackedObjects.Count - 1];
+                                _trackedObjects.RemoveAt(_trackedObjects.Count - 1);
+                                support.EndSupportOne(_toDeactivate, this.transform);
+
+                            }
+                        }
+                    }
+
                 }
             }
             else
             {
                 if (_anim.GetCurrentAnimatorStateInfo(0).IsName("Supporting"))
                 {
+
                     _anim.SetTrigger("end-support");
-                    support.EndSupport(_nearest);
+                    support.EndSupport(_nearest,this.transform);
+                    _trackedObjects.Clear();
                 }
-                prioSupport = false;
+                _prioSupport = false;
             }
         }
         else _supportTriggered = false;
@@ -97,7 +130,7 @@ public class Flying : Enemy
         //If the enemy is in range and has an initial clear FOV, he will initiate the attack. First a wind up animation is played and if it is finished the attack will commence while an attack rotation animation will be played.
         // after each Attack or Support move a short downtime is applied, so the player can breath.
  
-        if (!prioSupport && attack && weapons.Length > 0)
+        if (!_prioSupport && attack && weapons.Length > 0)
         {
             // Initiate Attack the player, if no Attack has yet been initiated
             if (!isAttacking) {
@@ -149,6 +182,19 @@ public class Flying : Enemy
 
         //When do you need to rush and when do you need to take cover?
 
+    }
+
+    private bool CheckForPrioSupport()
+    {
+        if (_shieldScript.getActivation() || base.healthPoints <= base.initialHP - aggressionThreshold) {
+            if (_anim.GetCurrentAnimatorStateInfo(0).IsName("Supporting"))
+            {
+                _anim.SetTrigger("end-support");
+                support.EndSupport(_nearest,this.transform);
+            }
+            _supportTriggered = false;
+            return false; }
+        else return _prioSupport;
     }
 
     private void CheckForDeath()

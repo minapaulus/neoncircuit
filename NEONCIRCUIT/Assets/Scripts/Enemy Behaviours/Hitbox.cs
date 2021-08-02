@@ -7,6 +7,11 @@ public class Hitbox : MonoBehaviour
     public Enemy targetScript;
     public float damageMultiplier = 1f;
 
+    public enum HitBoxType { basic, critical, indestructible, normal }
+
+    // The type will be useful for registration. Sounds and behaviour of Explosives. ONLY ONE Hitbox shall have assigned basic per Enemy. This guarantees explosive damage is triggered once.
+    public HitBoxType type;
+
     public Enemy.AssignedColors color; 
 
     public void OnTriggerEnter(Collider other)
@@ -23,13 +28,12 @@ public class Hitbox : MonoBehaviour
     }
 
     /* As we use raycasts, this might be an alternative to OnTriggerEnter*/
-    public void Damage(GameObject me, Enemy.AssignedColors atkColor)
+    public void Damage(GameObject me, Enemy.AssignedColors atkColor, float dmg)
     {
-        if (me.tag == "Player" && atkColor == targetScript.assignedColor)
+        if (me.tag == "Player" && (atkColor == targetScript.assignedColor || atkColor == Enemy.AssignedColors.Color4))
         {
             //TODO: Here the damage from the gun is given into a var which is then multiplied with the multiplier. 
-            var gunDamage = 10f;
-            var damage = damageMultiplier * gunDamage;
+            var damage = damageMultiplier * dmg;
             targetScript.DamageHP(damage);
 
         }

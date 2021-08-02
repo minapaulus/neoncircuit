@@ -9,9 +9,10 @@ public class ShootWhenRdy : AttackPattern
     public float Lifetime = 10;
     public float startOffset = 5;
     public float velocity = 2000;
-    public float stickiness = 1f;
-    private int weaponindice = 0;
+    public float homingforce = 1f;
     public float minFightingDistance = 5;
+
+    public float damage = 10f;
     // uses only one weapon!
 
     public override void Execute(Transform me, Transform target, GameObject[] Weapon, GameObject Target, Color HPIndic)
@@ -28,15 +29,10 @@ public class ShootWhenRdy : AttackPattern
             stats.GetComponent<Renderer>().material.SetColor("_EmissionColor", HPIndic);
             stats.lifetime = Lifetime;
             stats.targetID = Target.tag;
-            stats.corrector = stickiness;
+            stats.homingforce = homingforce;
             stats.target = target;
             stats.source = me.gameObject;
-        }
-                
-            
-        
-
-
-        
-    }
+            stats.Damage = damage;
+        }  
+    }    
 }

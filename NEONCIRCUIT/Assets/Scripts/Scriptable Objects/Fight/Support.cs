@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,24 +29,24 @@ public class Support :AttackPattern
        foreach(GameObject friend in friends)
         {
             // Only do something, if a shield needs to be activated.
-            if(!_trackedTargets.Contains(friend))
+            if (!_trackedTargets.Contains(friend))
             {
+                _trackedTargets.Add(friend);
                 //everything normal. But they have not yet been registered.
-                if(_trackedTargets.Count < 2)
+                if (_trackedTargets.Count <= 2)
                 {
                     //Debug.Log(friend.name);
-                    _trackedTargets.Add(friend);
-                    friend.GetComponent<ShieldScript>().Activate(me); 
+                    friend.GetComponent<ShieldScript>().Activate(me);
                 }
                 // Here, we have the case that a new friend is nearer than one who is being protected. In this case, we activate the new near friend and deactivate the far one.
                 else
                 {
-                    _trackedTargets.Add(friend);
+                    Debug.Log("Wieso hier rein?");
                     friend.GetComponent<ShieldScript>().Activate(me);
                     _trackedTargets.Sort(SortByDistanceToMe);
                     GameObject _toDeactivate = _trackedTargets[_trackedTargets.Count - 1];
                     _trackedTargets.RemoveAt(_trackedTargets.Count - 1);
-                    _toDeactivate.GetComponent<ShieldScript>().DeActivate();
+                    _toDeactivate.GetComponent<ShieldScript>().DeActivate(me);
 
                 }
             }
@@ -59,11 +60,22 @@ public class Support :AttackPattern
         return squaredRangeA.CompareTo(squaredRangeB);
     }
 
-    public void EndSupport(GameObject[] friends)
+    public void EndSupport(GameObject[] friends, Transform me)
     {
+        //Debug.Log("Ending Support");
         foreach(GameObject friend in friends)
         {
-            friend.GetComponent<ShieldScript>().DeActivate();
+            friend.GetComponent<ShieldScript>().DeActivate(me);
         }
+    }
+
+    internal void StartSupportOne(GameObject friend, Transform me)
+    {
+        friend.GetComponent<ShieldScript>().Activate(me);
+    }
+
+    internal void EndSupportOne(GameObject friend, Transform me)
+    {
+        friend.GetComponent<ShieldScript>().DeActivate(me);
     }
 }
