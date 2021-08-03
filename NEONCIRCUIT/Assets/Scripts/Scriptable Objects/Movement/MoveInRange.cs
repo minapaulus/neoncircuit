@@ -6,7 +6,7 @@ using UnityEngine.AI;
 [CreateAssetMenu(menuName = "Scriptable Objects/Movement/MoveInRange")]
 public class MoveInRange : MovementPattern
 {
-    [Range(0, 10)]
+    [Range(0, 30)]
     public float minDistance = 0f;
     [Range(0, 20)]
     public float maxDistanceObstacle = 0f;
@@ -27,7 +27,7 @@ public class MoveInRange : MovementPattern
         pos = target.position;
         if (!((me.position - pos).magnitude > minDistance))
         {
-            Debug.Log((me.position - pos).magnitude);
+            //Debug.Log((me.position - pos).magnitude);
             //Add artificial rotation, as the target is not the player from the view of the agent.
             var q = Quaternion.LookRotation(target.position - me.position);
             me.rotation = Quaternion.Lerp(me.rotation, q, Time.deltaTime * rotationSpeed);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,15 @@ public class Projectile : MonoBehaviour
 {
     public float lifetime = 0;
     private float timeelapsed = 0;
+    public float homingforce = 0;
     public string targetID = null;
     public GameObject source = null;
+    public Transform target;
     public float Velocity = 0;
 
-    private void Update()
+    public float Damage = 0f;
+
+    protected virtual void Update()
     {
         if (timeelapsed > lifetime)
         {
@@ -18,16 +23,28 @@ public class Projectile : MonoBehaviour
         }
         else
         {
+            CorrectPath();
             timeelapsed += Time.deltaTime;
         }
     }
 
+    private void CorrectPath()
+    {
+        if (target != null) this.transform.LookAt(target);
+        GetComponent<Rigidbody>().AddForce(this.transform.forward * homingforce * Time.deltaTime);
+    }
+
+    public void LoseTarget()
+    {
+        target = null;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(collision.gameObject.tag == targetID)
         {
             var stats = collision.gameObject.GetComponent<Playerstats>();
-            stats.AddHP(-10); 
+            stats.AddHP(-Damage); 
         }
         Destroy(this.transform.parent.gameObject);
     }

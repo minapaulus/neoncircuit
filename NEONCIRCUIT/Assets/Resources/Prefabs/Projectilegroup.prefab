@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1223284244862205159}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Projectilegroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,9 +45,9 @@ GameObject:
   - component: {fileID: 5694779045711632689}
   - component: {fileID: 4019338406905145640}
   - component: {fileID: 4659173301940717845}
-  m_Layer: 0
-  m_Name: Sphere
-  m_TagString: Untagged
+  m_Layer: 9
+  m_Name: Bullet
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,5 +158,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 0
+  corrector: 0
   targetID: 
   source: {fileID: 0}
+  target: {fileID: 0}
+  Velocity: 0
+  Damage: 10
