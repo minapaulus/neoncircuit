@@ -11,6 +11,15 @@ public class Gun : MonoBehaviour
     public float impactForce = 30f;
     public double firetime = 0;
     public double firerate = 0.3;
+    private GameObject _player;
+    public Enemy.AssignedColors color;
+    private Quaternion v;
+
+    void Start()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player");
+        v = particleSystem.transform.rotation;
+    }
 
     // Update is called once per frame
     void Update()
@@ -29,7 +38,6 @@ public class Gun : MonoBehaviour
 
     void Shoot()
     {
-        particleSystem.Play();
 
         Debug.Log("SHOOOT");
 
@@ -37,13 +45,21 @@ public class Gun : MonoBehaviour
         if(Physics.Raycast(transform.position, cam.transform.forward, out hit, range))
         {
             Debug.Log(hit.transform.name);
+            particleSystem.transform.LookAt(hit.transform.position, Vector3.up);
+            particleSystem.Play();
 
-            Target t = hit.transform.GetComponent<Target>();
-
-            if(t != null)
+            if (hit.transform.tag == "Hitbox")
             {
-                t.TakeDamage(damage);
+                var hbox = hit.transform.GetComponent<Hitbox>();
+                hbox.Damage(_player, color, damage);
             }
+
+            //Target t = hit.transform.GetComponent<Target>();
+
+            //if(t != null)
+            //{
+            //    t.TakeDamage(damage);
+            //}
 
             if(hit.rigidbody != null)
             {
@@ -52,6 +68,11 @@ public class Gun : MonoBehaviour
 
             GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impact, 0.3f);
+        }
+        else
+        {
+            particleSystem.transform.rotation = v;
+            particleSystem.Play();
         }
     }
 }
