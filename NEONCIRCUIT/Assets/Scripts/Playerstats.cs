@@ -47,6 +47,21 @@ public class Playerstats : MonoBehaviour
         }
     }
 
+    public bool CanFirePrimary()
+    {
+        return (PrimaryAmmo >= 1); 
+    }
+
+    public bool CanFireSecondary()
+    {
+        return (SecondaryAmmo >= 1);
+    }
+
+    public bool CanFireGrenade()
+    {
+        return (SecondaryAmmo >= 1);
+    }
+
 
     public void AddHP(float i)
     {   
