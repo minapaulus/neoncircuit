@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,21 +23,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Start()
     {
         initialHP = healthPoints;
-        switch (assignedColor)
-        {
-            case AssignedColors.Color1:
-                initcolor = Color.green;
-                break;
-            case AssignedColors.Color2:
-                initcolor = Color.blue;
-                break;
-            case AssignedColors.Color3:
-                initcolor = Color.red;
-                break;
-            default:
-                initcolor = Color.white;
-                break;
-                }
+        initcolor = ChooseColor(assignedColor);
 
         foreach(Renderer re in ren)
         {
@@ -47,11 +34,36 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public static Color ChooseColor(AssignedColors assignedColor)
+    {
+        var _initcolor = new Color();
+        switch (assignedColor)
+        {
+            case AssignedColors.Color1:
+                _initcolor = Color.green;
+                break;
+            case AssignedColors.Color2:
+                _initcolor = Color.blue;
+                break;
+            case AssignedColors.Color3:
+                _initcolor = Color.red;
+                break;
+            case AssignedColors.Color4:
+                _initcolor = Color.white;
+                break;
+            default:
+                _initcolor = Color.white;
+                break;
+        }
+
+        return _initcolor;
+    }
+
     protected virtual void Update()
     {
         if (healthPoints <= 0) Die();
 
-        HPindic = initcolor * (healthPoints / 100f);
+        HPindic = initcolor * (healthPoints / initialHP);
         foreach(Material mymat in _myMats)
         {
             mymat.SetColor("_EmissionColor", HPindic);

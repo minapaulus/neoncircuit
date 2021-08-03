@@ -14,11 +14,13 @@ public class Gun : MonoBehaviour
     private GameObject _player;
     public Enemy.AssignedColors color;
     private Quaternion v;
+    public Playerstats playerstats;
 
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
         v = particleSystem.transform.rotation;
+        playerstats.ChangePrimaryColor(color);
     }
 
     // Update is called once per frame

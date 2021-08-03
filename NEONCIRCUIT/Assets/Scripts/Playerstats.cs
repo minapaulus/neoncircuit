@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,18 +16,37 @@ public class Playerstats : MonoBehaviour
     private float PrimaryAmmoMax;
     public Image PrimaryAmmoCount;
 
+    public Renderer primaryWeaponRenderer;
+    private List<Material> _primaryWeaponMats = new List<Material>();
+    public Renderer primaryWeaponRendererSphere;
+    private List<Material> _primaryWeaponSphereMat = new List<Material>();
+
+    public Enemy.AssignedColors primaryColor;
+    private Color _neonColor; 
+
     public float SecondaryAmmo = 2;
     private float SecondaryAmmoMax;
     public Image SecondaryAmmoCount;
 
-    private void Start()
+    private void Awake()
     {
         //Error if none is selected.
 
         HPmax = HP;
         PrimaryAmmoMax = PrimaryAmmo;
         SecondaryAmmoMax = SecondaryAmmo;
+        foreach (Material ma in primaryWeaponRenderer.materials)
+        {
+            _primaryWeaponMats.Add(ma);
+            Debug.Log(ma.name);
+        }
+        foreach (Material mat in primaryWeaponRendererSphere.materials)
+        {
+            _primaryWeaponSphereMat.Add(mat);
+            Debug.Log(mat.name);
+        }
     }
+
 
     public void AddHP(float i)
     {   
@@ -48,6 +68,7 @@ public class Playerstats : MonoBehaviour
         PrimaryAmmo += i;
         if (PrimaryAmmo > PrimaryAmmoMax)
         {
+            //make ball smaller and color in Neoncolor
             PrimaryAmmo = PrimaryAmmoMax;
         }
         if (PrimaryAmmo <= 0)
@@ -55,7 +76,29 @@ public class Playerstats : MonoBehaviour
             PrimaryAmmo = 0;
         }
         PrimaryAmmoCount.fillAmount = PrimaryAmmo / PrimaryAmmoMax;
+        foreach (Material mat in _primaryWeaponMats)
+        {
+            mat.SetColor("_EmissionColor", _neonColor * PrimaryAmmo / 20);
+        }
     }
+
+    public void ChangePrimaryColor(Enemy.AssignedColors newcolor)
+    {
+        primaryColor = newcolor;
+        _neonColor = Enemy.ChooseColor(primaryColor);
+        Debug.Log(_primaryWeaponSphereMat.Count);
+        foreach (Material ma in _primaryWeaponSphereMat)
+        {
+            ma.SetColor("_EmissionColor", _neonColor * 1);
+        }
+        foreach (Material mat in _primaryWeaponMats)
+        {
+            mat.SetColor("_EmissionColor", _neonColor * PrimaryAmmo / 20);
+        }
+        // Change renderer of weapon. 
+
+    }
+
     public void AddSecondary(float i)
     {
         SecondaryAmmo += i;
