@@ -9,19 +9,29 @@ public class Gun : MonoBehaviour
     public ParticleSystem particleSystem;
     public GameObject impactEffect;
     public float impactForce = 30f;
+    public double firetime = 0;
+    public double firerate = 0.3;
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        firetime -= Time.deltaTime;
+        if (Input.GetButton("Fire1"))
         {
-            Shoot();
+            if(firetime <= 0)
+            {
+                Shoot();
+                firetime = firerate;
+                //test
+            }
         }
     }
 
     void Shoot()
     {
         particleSystem.Play();
+
+        Debug.Log("SHOOOT");
 
         RaycastHit hit;
         if(Physics.Raycast(transform.position, cam.transform.forward, out hit, range))
@@ -41,7 +51,7 @@ public class Gun : MonoBehaviour
             }
 
             GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impact, 2f);
+            Destroy(impact, 0.3f);
         }
     }
 }
