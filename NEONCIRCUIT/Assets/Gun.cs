@@ -19,7 +19,7 @@ public class Gun : MonoBehaviour
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
-        v = particleSystem.transform.rotation;
+        v = particleSystem.transform.localRotation;
         playerstats.ChangePrimaryColor(color);
     }
 
@@ -46,8 +46,8 @@ public class Gun : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(transform.position, cam.transform.forward, out hit, range))
         {
-            Debug.Log(hit.transform.name);
-            particleSystem.transform.LookAt(hit.transform.position, Vector3.up);
+            //Debug.Log(hit.transform.name);
+            particleSystem.transform.LookAt(hit.point, Vector3.up);
             particleSystem.Play();
 
             if (hit.transform.tag == "Hitbox")
@@ -73,7 +73,7 @@ public class Gun : MonoBehaviour
         }
         else
         {
-            particleSystem.transform.rotation = v;
+            particleSystem.transform.localRotation = v;
             particleSystem.Play();
         }
     }
