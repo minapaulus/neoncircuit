@@ -86,8 +86,6 @@ public class Spiper : Enemy
                         _lineR.enabled = false;
                         _anim.SetTrigger("Attack-end");
                         _shot = false;
-                        _projectile.LoseTarget();
-                        _projectile = null;
                         _aiming = false;
 
                     }

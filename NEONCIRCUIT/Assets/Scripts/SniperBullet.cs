@@ -14,6 +14,7 @@ public class SniperBullet : Projectile
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        Physics.IgnoreLayerCollision(8, 9);
     }
     override protected void Update()
     {
@@ -48,6 +49,7 @@ public class SniperBullet : Projectile
             var stats = collision.gameObject.GetComponent<Playerstats>();
             stats.AddHP(- base.Damage);
         }
+        Debug.Log(collision.collider.name);
         Destroy(this.transform.parent.gameObject);
     }
 
