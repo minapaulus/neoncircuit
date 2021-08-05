@@ -21,6 +21,8 @@ public class Playerstats : MonoBehaviour
     public Renderer primaryWeaponRendererSphere;
     private List<Material> _primaryWeaponSphereMat = new List<Material>();
 
+    public Material primaryUI;
+
     public Enemy.AssignedColors primaryColor;
     private Color _neonColor; 
 
@@ -110,6 +112,7 @@ public class Playerstats : MonoBehaviour
         {
             mat.SetColor("_EmissionColor", _neonColor * PrimaryAmmo / 20);
         }
+        primaryUI.SetColor("_EmissionColor", _neonColor);
         // Change renderer of weapon. 
 
     }

@@ -63,8 +63,15 @@ public class Enemy : MonoBehaviour
     {
         if (healthPoints <= 0) Die();
 
-        HPindic = initcolor * (healthPoints / initialHP);
-        foreach(Material mymat in _myMats)
+        initcolor = ChooseColor(assignedColor);
+        // TODO: Auskommentieren und in Damage nur rein.
+        ChangeColor(initcolor);
+    }
+
+    public void ChangeColor(Color color)
+    {
+        HPindic =  color * (healthPoints / initialHP);
+        foreach (Material mymat in _myMats)
         {
             mymat.SetColor("_EmissionColor", HPindic);
         }
@@ -76,8 +83,10 @@ public class Enemy : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    public void DamageHP(float dmg)
+    // Virtual added, does it make a difference? Does it still work?
+    public virtual void DamageHP(float dmg)
     {
         healthPoints -= dmg;
+        ChangeColor(initcolor);
     }
 }

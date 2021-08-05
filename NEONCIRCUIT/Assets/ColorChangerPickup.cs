@@ -31,6 +31,13 @@ public class ColorChangerPickup : MonoBehaviour
             }
         }
         ChangeTargetColor(targetColor);
+
+        GameObject _player = GameObject.FindGameObjectWithTag("Player");
+        Playerstats buffer;
+        if(_player != null && _player.TryGetComponent<Playerstats>(out buffer))
+        {
+            playerstat = buffer;
+        }
     }
 
     private void Update()
@@ -63,14 +70,17 @@ public class ColorChangerPickup : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        playerstat.AddPrimary(restorePrimary);
-        playerstat.AddSecondary(restoreSecondary);
+        if (other.tag == "Player")
+        {
+            playerstat.AddPrimary(restorePrimary);
+            playerstat.AddSecondary(restoreSecondary);
 
-        playerstat.ChangePrimaryColor(targetColor);
+            playerstat.ChangePrimaryColor(targetColor);
 
-        StartCoroutine(ReactivateAfterXSec(downtime));
-        PaintColor(Color.black);
-        this.gameObject.GetComponent<BoxCollider>().enabled = false ;
+            StartCoroutine(ReactivateAfterXSec(downtime));
+            PaintColor(Color.black);
+            this.gameObject.GetComponent<BoxCollider>().enabled = false;
+        }
     }
 
     private IEnumerator ReactivateAfterXSec(float x)

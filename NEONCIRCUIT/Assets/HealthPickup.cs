@@ -17,7 +17,10 @@ public class HealthPickup : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        playerstat.AddHP(restore);
-        Destroy(this.gameObject);
+        if (other.tag == "Player")
+        {
+            playerstat.AddHP(restore);
+            Destroy(this.gameObject);
+        }
     }
 }
