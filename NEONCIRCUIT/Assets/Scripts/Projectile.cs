@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour
 
     private void CorrectPath()
     {
-        if (target != null) this.transform.LookAt(target);
+        if (target != null) this.transform.LookAt(target.position);
         GetComponent<Rigidbody>().AddForce(this.transform.forward * homingforce * Time.deltaTime);
     }
 
@@ -41,11 +41,16 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == targetID)
+        if(collision.gameObject.tag != "Projectile"){
+            if (collision.gameObject.tag == targetID)
+            {
+                var stats = collision.gameObject.GetComponent<Playerstats>();
+                stats.AddHP(-Damage);
+            }
+            Destroy(this.transform.parent.gameObject);
+        } else
         {
-            var stats = collision.gameObject.GetComponent<Playerstats>();
-            stats.AddHP(-Damage); 
+                Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());            
         }
-        Destroy(this.transform.parent.gameObject);
     }
 }

@@ -68,14 +68,14 @@ public class RushingEnemyBehaviour1 : Enemy
                 // With isAttacking we tell our NPC to rotate until he is looking directly at the Player.
                 
                 //RayCast
-                if (LookAtPlayer())
+                if (PlayerInSight())
                 {
                    // Debug.Log("I Initiate ATTACK");
                     _anim.SetBool("isAttacking", true);
                     if (_anim.GetCurrentAnimatorStateInfo(0).IsName("Attacking") &&
                         _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= .6f)
                     {
-                        _agent.isStopped = false;
+                        _agent.isStopped = true;
                         //Debug.Log("here we are");
                         attack.Execute(transform, _playerTarget.transform, Weapon, _playerTarget, base.HPindic);
                         _lastfired = Time.time;

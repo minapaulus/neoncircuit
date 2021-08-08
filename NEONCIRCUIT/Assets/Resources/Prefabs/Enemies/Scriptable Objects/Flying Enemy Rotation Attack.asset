@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f437a773c7838c440b94b3890265f737, type: 3}
   m_Name: Flying Enemy Rotation Attack
   m_EditorClassIdentifier: 
-  Attackspeed: 3.5
+  Attackspeed: 7
   Projectile: {fileID: 25648959026538147, guid: 7c2dd4d111caadd46970fb7d54142242, type: 3}
   Lifetime: 2
   startOffset: 2
-  velocity: 100
-  stickiness: 500
+  velocity: 200
+  homingforce: 400
   minFightingDistance: 20
+  damage: 10

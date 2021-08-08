@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
                 _myMats.Add(ma);
             }
         }
+        ChangeColor(initcolor);
     }
 
     public static Color ChooseColor(AssignedColors assignedColor)
@@ -61,10 +62,17 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (healthPoints <= 0) Die();
+        //if (healthPoints <= 0) Die();
 
-        initcolor = ChooseColor(assignedColor);
+        //IMPORTANT FOR BOSS: initcolor = ChooseColor(assignedColor);
         // TODO: Auskommentieren und in Damage nur rein.
+        //ChangeColor(initcolor);
+    }
+
+    protected void ChangeAssignedColor(Enemy.AssignedColors newColor)
+    {
+        assignedColor = newColor;
+        initcolor = ChooseColor(assignedColor);
         ChangeColor(initcolor);
     }
 
@@ -77,7 +85,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Die()
+    protected void Die()
     {
         // Only Destroy for now. Later a shader animation
         Destroy(this.gameObject);
@@ -86,7 +94,10 @@ public class Enemy : MonoBehaviour
     // Virtual added, does it make a difference? Does it still work?
     public virtual void DamageHP(float dmg)
     {
-        healthPoints -= dmg;
+        if (healthPoints - dmg <= initialHP) healthPoints -= dmg;
+        else healthPoints = initialHP;
         ChangeColor(initcolor);
+
+        if (healthPoints <= 0) Die();
     }
 }
