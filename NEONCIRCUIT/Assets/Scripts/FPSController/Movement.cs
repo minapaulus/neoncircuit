@@ -15,15 +15,17 @@ public class Movement : MonoBehaviour
     // collision detection
     public Transform groundCheck;
     // the radius of the sphere around which collisions will be detected
-    public float sphereRadius = 0.2f;
+    public float sphereRadius = 0.4f;
     // only game objects with this layer mask will be included in the collision detection
     public LayerMask groundMask;
+    public float unitsTravelledForReload = 1f;
 
-
+    private float currentlyTravlled = 0f;
     private Vector3 velocity;
     private bool grounded;
     private bool doubleJumped;
 
+    private Playerstats stats;
 
     // Update is called once per frame
     void Update()
@@ -50,7 +52,9 @@ public class Movement : MonoBehaviour
         // normalize to avoid moving at double speed when moving both vertically and horizontally
         moveDirection.Normalize();
         moveDirection = movementSpeed * moveDirection + transform.forward * dashVelocity * dash;
-        controller.Move(moveDirection * Time.deltaTime);
+        Vector3 temp = moveDirection * Time.deltaTime;
+        currentlyTravlled += temp.x + temp.z;
+        controller.Move(temp);
 
         // jumping
         if(Input.GetButtonDown("Jump"))
@@ -71,5 +75,14 @@ public class Movement : MonoBehaviour
         // v = 0.5 * g * t^2
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    private void RefillAmmo()
+    {
+        if(currentlyTravlled >= unitsTravelledForReload)
+        {
+            stats.AddPrimary(1f);
+            currentlyTravlled = 0f;
+        }
     }
 }

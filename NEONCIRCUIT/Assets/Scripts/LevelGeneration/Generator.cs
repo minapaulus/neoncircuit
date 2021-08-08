@@ -10,8 +10,8 @@ public class Generator : MonoBehaviour
     public int gridSizeX = 10;
     public int gridSizeZ = 10;
 
-    public int prefabSizeX;
-    public int prefabSizeZ;
+    public float prefabSizeX;
+    public float prefabSizeZ;
 
     // prefabs for all opening directions
     public GameObject prefabPosX;
@@ -29,6 +29,13 @@ public class Generator : MonoBehaviour
     public GameObject prefabPosXZNegZ;
     public GameObject prefabPosZNegXZ;
     public GameObject prefabPosXZNegXZ;
+
+
+    public List<GameObject> prefabEmpty;
+    public List<GameObject> prefabSingle;
+    public List<GameObject> prefabDouble;
+    public List<GameObject> prefabTriple;
+    public List<GameObject> prefabClosed;
 
     void Start()
     {
@@ -71,11 +78,13 @@ public class Generator : MonoBehaviour
         {
             for(int z = 0; z < maze.Height; z++)
             {
-                int scaledX = x * prefabSizeX;
-                int scaledZ = z * prefabSizeZ;
+                float scaledX = x * prefabSizeX;
+                float scaledZ = z * prefabSizeZ;
                 if(maze[x, z].North && maze[x, z].South && maze[x, z].East && maze[x, z].West)
                 {
                     Instantiate(prefabPosXZNegXZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    /*int rand = random.Next(prefabEmpty.Count);
+                    Instantiate(prefabEmpty[rand], new Vector3(scaledX, 0, scaledZ), Quaternion.identity);*/
                 }
                 else if(maze[x, z].North && maze[x, z].South && maze[x, z].East)
                 {
@@ -83,7 +92,9 @@ public class Generator : MonoBehaviour
                 }
                 else if(maze[x, z].North && maze[x, z].South && maze[x, z].West)
                 {
-                    Instantiate(prefabPosZNegXZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    //Instantiate(prefabPosZNegXZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    GameObject temp = Instantiate(prefabPosXZNegZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    temp.transform.RotateAround(temp.transform.position + new Vector3(prefabSizeX * 0.5f, 0f, prefabSizeZ * 0.5f), Vector3.up, 180f);
                 }
                 else if(maze[x, z].North && maze[x, z].East && maze[x, z].West)
                 {
