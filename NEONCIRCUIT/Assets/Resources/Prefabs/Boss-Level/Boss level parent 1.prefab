@@ -202,8 +202,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1138921297758350303}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.392, y: 0.004, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4075279788902861591}
@@ -1832,6 +1832,7 @@ GameObject:
   - component: {fileID: 3261509069536116054}
   - component: {fileID: 3261509069536116052}
   - component: {fileID: 3261509069536116053}
+  - component: {fileID: 2144049330865330251}
   m_Layer: 0
   m_Name: Right-Door
   m_TagString: Untagged
@@ -1903,6 +1904,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2144049330865330251
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3261509069536116055}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.20707719, y: 9.095006, z: 4.547732}
+  m_Center: {x: 0.10353955, y: 4.547503, z: -2.2738662}
 --- !u!1 &3730561369256366509
 GameObject:
   m_ObjectHideFlags: 0
@@ -3202,6 +3216,7 @@ GameObject:
   - component: {fileID: 6727427851134762505}
   - component: {fileID: 1591190416837661984}
   - component: {fileID: 2321978756472025325}
+  - component: {fileID: 7368949577738965046}
   m_Layer: 0
   m_Name: left Door.001
   m_TagString: Untagged
@@ -3273,6 +3288,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7368949577738965046
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5116177064580115562}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.20707732, y: 9.095006, z: 4.547732}
+  m_Center: {x: 0.103538394, y: 4.547503, z: -2.2738662}
 --- !u!1 &5837591693566470726
 GameObject:
   m_ObjectHideFlags: 0
@@ -4086,6 +4114,7 @@ GameObject:
   - component: {fileID: 3467170362534670802}
   - component: {fileID: 2759429562096318893}
   - component: {fileID: 3714928976913748271}
+  - component: {fileID: 1399872006899797226}
   m_Layer: 0
   m_Name: Door.001
   m_TagString: Untagged
@@ -4159,6 +4188,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1399872006899797226
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8766286600429401982}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3459603051315571903, guid: 0cf7b0eded84e654d88e15372417eae9, type: 3}
 --- !u!1001 &7787586845484749940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4360,11 +4403,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e13e57d5c195534bbab2decd8b02f4c, type: 3}
---- !u!4 &2842675129362371067 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5431381839785018767, guid: 0e13e57d5c195534bbab2decd8b02f4c, type: 3}
-  m_PrefabInstance: {fileID: 7787586845484749940}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2842675129362371065 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5431381839785018765, guid: 0e13e57d5c195534bbab2decd8b02f4c, type: 3}
@@ -4376,3 +4414,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ebce6e6b5b698046a1ffdcfefdea72d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &2842675129362371067 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5431381839785018767, guid: 0e13e57d5c195534bbab2decd8b02f4c, type: 3}
+  m_PrefabInstance: {fileID: 7787586845484749940}
+  m_PrefabAsset: {fileID: 0}
