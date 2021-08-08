@@ -23,7 +23,7 @@ public class ShootWhenRdy : AttackPattern
             var trans = weapon.transform;
             var angle = Quaternion.FromToRotation(Vector3.forward, trans.forward);
             var pos = trans.position + new Vector3(trans.forward.x * startOffset, trans.forward.y * startOffset, trans.forward.z * startOffset);
-            var spawn = Instantiate(Projectile, pos, angle);
+            var spawn = Instantiate(Projectile, pos, trans.rotation);
             var stats = spawn.GetComponentInChildren<Projectile>();
             stats.GetComponent<Rigidbody>().AddForce(stats.transform.forward * velocity);
             stats.GetComponent<Renderer>().material.SetColor("_EmissionColor", HPIndic);
@@ -33,6 +33,13 @@ public class ShootWhenRdy : AttackPattern
             stats.target = target;
             stats.source = me.gameObject;
             stats.Damage = damage;
+
+            var mats = stats.transform.GetChild(0).GetComponent<Renderer>().materials;
+            foreach(Material mat in mats)
+            {
+                mat.color = HPIndic;
+                mat.SetColor("_EmissionColor", HPIndic * 10);
+            }
         }  
     }    
 }
