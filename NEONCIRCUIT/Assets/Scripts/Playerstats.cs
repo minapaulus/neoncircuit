@@ -20,6 +20,8 @@ public class Playerstats : MonoBehaviour
     private List<Material> _primaryWeaponMats = new List<Material>();
     public Renderer primaryWeaponRendererSphere;
     private List<Material> _primaryWeaponSphereMat = new List<Material>();
+    private GameObject _ammoSphere;
+    private Vector3 _originalScale;
 
     public Material primaryUI;
 
@@ -47,6 +49,9 @@ public class Playerstats : MonoBehaviour
             _primaryWeaponSphereMat.Add(mat);
             //Debug.Log(mat.name);
         }
+
+        _ammoSphere = primaryWeaponRendererSphere.gameObject;
+        _originalScale = _ammoSphere.transform.localScale;
     }
 
     public bool CanFirePrimary()
@@ -97,6 +102,8 @@ public class Playerstats : MonoBehaviour
         {
             mat.SetColor("_EmissionColor", _neonColor * PrimaryAmmo / 20);
         }
+
+        _ammoSphere.transform.localScale = _originalScale * (PrimaryAmmo/PrimaryAmmoMax);
     }
 
     public void ChangePrimaryColor(Enemy.AssignedColors newcolor)
