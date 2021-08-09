@@ -40,12 +40,12 @@ public class Playerstats : MonoBehaviour
         foreach (Material ma in primaryWeaponRenderer.materials)
         {
             _primaryWeaponMats.Add(ma);
-            Debug.Log(ma.name);
+            //Debug.Log(ma.name);
         }
         foreach (Material mat in primaryWeaponRendererSphere.materials)
         {
             _primaryWeaponSphereMat.Add(mat);
-            Debug.Log(mat.name);
+            //Debug.Log(mat.name);
         }
     }
 

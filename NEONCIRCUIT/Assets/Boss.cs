@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class Boss : Enemy
 {
+    private bool _triggered = false;
     private GameObject _playertarget;
     public GameObject robotSphere;
     public Animator _anim;
@@ -115,13 +116,79 @@ public class Boss : Enemy
         }
     }
 
+    public void TriggerBoss()
+    {
+        if (!_triggered) _triggered = true;
+    }
+
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
 
+        if (_playertarget == null) return;
+
+        Debuging();
         // When damaged the red marks on the bottom should spread out and if red phase begins be fully extruded. With damage to the red phase, the mask will shrink again.
 
+        if (_triggered)
+        {
+            ChooseAction();
+
+            if (_normalAttack)
+            {
+                ChaseAttack();
+            }
+
+            if (_normalRotationAttack)
+            {
+                RotationAttack();
+            }
+
+            if (_TrackingSupportAttack)
+            {
+                SupportAttack();
+            }
+
+            if (_laserBeamAttack)
+            {
+                BeamAttack();
+            }
+        }
+    }
+
+    private void ChooseAction()
+    {
+        if(!(_TrackingSupportAttack || _laserBeamAttack || _normalAttack || _normalRotationAttack))
+        {
+            int rando = (int)UnityEngine.Random.Range(0, 20);
+
+            if (rando < 9)
+            {
+                _normalAttack = true;
+            }
+
+            if (rando >= 9 && rando < 14)
+            {
+                _normalRotationAttack = true;
+            }
+
+            if (rando >= 14 && rando < 17)
+            {
+                _TrackingSupportAttack = true;
+            }
+
+            if (rando >= 17 && rando < 20)
+            {
+                _laserBeamAttack = true;
+            }
+
+
+        }
+    }
+
+    private void Debuging()
+    {
         // Debug
         if (Input.GetKey("2"))
         {
@@ -144,26 +211,6 @@ public class Boss : Enemy
         {
             //Debug.Log("Pressed 1");
             _laserBeamAttack = true;
-        }
-
-        if (_normalAttack)
-        {
-            ChaseAttack();
-        }
-
-        if (_normalRotationAttack)
-        {
-            RotationAttack();
-        }
-
-        if (_TrackingSupportAttack)
-        {
-            SupportAttack();
-        }
-
-        if (_laserBeamAttack)
-        {
-            BeamAttack();
         }
     }
 
