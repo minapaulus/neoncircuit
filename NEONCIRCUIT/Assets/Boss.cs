@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class Boss : Enemy
 {
-    private bool _triggered = false;
+    private bool _triggered = true;
     private GameObject _playertarget;
     public GameObject robotSphere;
     public Animator _anim;

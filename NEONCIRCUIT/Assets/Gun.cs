@@ -48,7 +48,7 @@ public class Gun : MonoBehaviour
                 if (hit.transform.tag == "Hitbox")
                 {
                     var hbox = hit.transform.GetComponent<Hitbox>();
-                    hbox.Damage(_player, color, damage);
+                    hbox.Damage(_player, playerstats.primaryColor, damage);
                 }
                 if (hit.rigidbody != null)
                 {
