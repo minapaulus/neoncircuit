@@ -19,6 +19,9 @@ public class Grid
     public int Width => width;
     public int Height => height;
 
+    public Tile Start => entries[0, 0];
+    public Tile End => entries[Width - 1, Height - 1];
+
     public Grid(List<Edge> mst, int width, int height)
     {
         this.width = width;
@@ -81,5 +84,10 @@ public class Grid
                 i++;
             }
         }
+
+        // open up start and end in correct directions - change direction if you want to rotate
+        Start.North = true;
+        //Start.East = true;
+        End.East = true;
     }
 }

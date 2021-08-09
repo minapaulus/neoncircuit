@@ -13,6 +13,8 @@ public class Generator : MonoBehaviour
     public float prefabSizeX;
     public float prefabSizeZ;
 
+    public Vector3 endPoint = new Vector3(0f, 0f, 0f);
+
     // prefabs for all opening directions
     public GameObject prefabPosX;
     public GameObject prefabPosZ;
@@ -73,6 +75,11 @@ public class Generator : MonoBehaviour
 
     void PlacePrefabs(Grid maze)
     {
+        // calculate startpoint
+        float width = prefabSizeX * gridSizeX;
+        float depth = prefabSizeZ * gridSizeZ;
+        Vector3 startpoint = new Vector3(endPoint.x - width, endPoint.y, endPoint.z - depth);
+
         // TODO: delete some prefabs and use rotation
         for(int x = 0; x < maze.Width; x++)
         {
@@ -80,69 +87,68 @@ public class Generator : MonoBehaviour
             {
                 float scaledX = x * prefabSizeX;
                 float scaledZ = z * prefabSizeZ;
+                Vector3 placePos = startpoint + new Vector3(scaledX, 0, scaledZ);
                 if(maze[x, z].North && maze[x, z].South && maze[x, z].East && maze[x, z].West)
                 {
-                    Instantiate(prefabPosXZNegXZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabPosXZNegXZ, placePos, Quaternion.identity);
                     /*int rand = random.Next(prefabEmpty.Count);
                     Instantiate(prefabEmpty[rand], new Vector3(scaledX, 0, scaledZ), Quaternion.identity);*/
                 }
                 else if(maze[x, z].North && maze[x, z].South && maze[x, z].East)
                 {
-                    Instantiate(prefabPosXZNegZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabPosXZNegZ, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].North && maze[x, z].South && maze[x, z].West)
                 {
-                    //Instantiate(prefabPosZNegXZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
-                    GameObject temp = Instantiate(prefabPosXZNegZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
-                    temp.transform.RotateAround(temp.transform.position + new Vector3(prefabSizeX * 0.5f, 0f, prefabSizeZ * 0.5f), Vector3.up, 180f);
+                    Instantiate(prefabPosZNegXZ, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].North && maze[x, z].East && maze[x, z].West)
                 {
-                    Instantiate(prefabPosXNegXZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabPosXNegXZ, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].South && maze[x, z].East && maze[x, z].West)
                 {
-                    Instantiate(prefabPosXZNegX, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabPosXZNegX, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].North && maze[x, z].South)
                 {
-                    Instantiate(prefabPosZNegZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabPosZNegZ, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].North && maze[x, z].East)
                 {
-                    Instantiate(prefabPosXNegZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabPosXNegZ, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].North && maze[x, z].West)
                 {
-                    Instantiate(prefabNegXZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabNegXZ, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].South && maze[x, z].East)
                 {
-                    Instantiate(prefabPosXZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabPosXZ, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].South && maze[x, z].West)
                 {
-                    Instantiate(prefabPosZNegX, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabPosZNegX, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].East && maze[x, z].West)
                 {
-                    Instantiate(prefabPosXNegX, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabPosXNegX, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].North)
                 {
-                    Instantiate(prefabNegZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabNegZ, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].South)
                 {
-                    Instantiate(prefabPosZ, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabPosZ, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].East)
                 {
-                    Instantiate(prefabPosX, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabPosX, placePos, Quaternion.identity);
                 }
                 else if(maze[x, z].West)
                 {
-                    Instantiate(prefabNegX, new Vector3(scaledX, 0, scaledZ), Quaternion.identity);
+                    Instantiate(prefabNegX, placePos, Quaternion.identity);
                 }
             }
         }
