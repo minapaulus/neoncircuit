@@ -6,7 +6,6 @@ public class Gun : MonoBehaviour
     public float damage = 10f;
     public float range = 100f;
     public Camera cam;
-    public ParticleSystem particleSystem;
     public GameObject impactEffect;
     public float impactForce = 30f;
     public double firetime = 0;
@@ -19,7 +18,6 @@ public class Gun : MonoBehaviour
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
-        v = particleSystem.transform.localRotation;
         playerstats.ChangePrimaryColor(color);
     }
 
@@ -44,37 +42,21 @@ public class Gun : MonoBehaviour
         Debug.Log("SHOOOT");
 
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, cam.transform.forward, out hit, range))
+        if (Physics.Raycast(transform.position, cam.transform.forward, out hit, range))
         {
-            //Debug.Log(hit.transform.name);
-            particleSystem.transform.LookAt(hit.point, Vector3.up);
-            particleSystem.Play();
-
-            if (hit.transform.tag == "Hitbox")
-            {
-                var hbox = hit.transform.GetComponent<Hitbox>();
-                hbox.Damage(_player, color, damage);
+            if(playerstats.CanFirePrimary()) {
+                if (hit.transform.tag == "Hitbox")
+                {
+                    var hbox = hit.transform.GetComponent<Hitbox>();
+                    hbox.Damage(_player, color, damage);
+                }
+                if (hit.rigidbody != null)
+                {
+                    hit.rigidbody.AddForce(-hit.normal * impactForce);
+                }
+                GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(impact, 0.3f);
             }
-
-            //Target t = hit.transform.GetComponent<Target>();
-
-            //if(t != null)
-            //{
-            //    t.TakeDamage(damage);
-            //}
-
-            if(hit.rigidbody != null)
-            {
-                hit.rigidbody.AddForce(-hit.normal * impactForce);
-            }
-
-            GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impact, 0.3f);
-        }
-        else
-        {
-            particleSystem.transform.localRotation = v;
-            particleSystem.Play();
         }
     }
 }
