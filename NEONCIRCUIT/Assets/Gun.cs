@@ -5,6 +5,7 @@ public class Gun : MonoBehaviour
 
     public float damage = 10f;
     public float range = 100f;
+    public float costs = 1f;
     public Camera cam;
     public GameObject impactEffect;
     public float impactForce = 30f;
@@ -45,6 +46,7 @@ public class Gun : MonoBehaviour
         if (Physics.Raycast(transform.position, cam.transform.forward, out hit, range))
         {
             if(playerstats.CanFirePrimary()) {
+                playerstats.AddPrimary(-costs);
                 if (hit.transform.tag == "Hitbox")
                 {
                     var hbox = hit.transform.GetComponent<Hitbox>();
