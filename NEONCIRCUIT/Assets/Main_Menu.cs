@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Main_Menu : MonoBehaviour
 {
@@ -38,6 +39,19 @@ public class Main_Menu : MonoBehaviour
         }else
         {
             credits.SetActive(false);
+        }
+    }
+
+    public void NewGame()
+    {
+        try
+        {
+            //Newgame soll die erste Scene sein nach dem Hauptmenü um Build menu.
+            SceneManager.LoadScene(1);
+        }
+        catch
+        {
+
         }
     }
 }

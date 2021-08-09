@@ -128,7 +128,7 @@ public class Boss : Enemy
 
         if (_playertarget == null) return;
 
-        Debug();
+        Debuging();
         // When damaged the red marks on the bottom should spread out and if red phase begins be fully extruded. With damage to the red phase, the mask will shrink again.
 
         if (_triggered)
@@ -162,10 +162,32 @@ public class Boss : Enemy
         if(!(_TrackingSupportAttack || _laserBeamAttack || _normalAttack || _normalRotationAttack))
         {
             int rando = (int)UnityEngine.Random.Range(0, 20);
+
+            if (rando < 9)
+            {
+                _normalAttack = true;
+            }
+
+            if (rando >= 9 && rando < 14)
+            {
+                _normalRotationAttack = true;
+            }
+
+            if (rando >= 14 && rando < 17)
+            {
+                _TrackingSupportAttack = true;
+            }
+
+            if (rando >= 17 && rando < 20)
+            {
+                _laserBeamAttack = true;
+            }
+
+
         }
     }
 
-    private void Debug()
+    private void Debuging()
     {
         // Debug
         if (Input.GetKey("2"))
