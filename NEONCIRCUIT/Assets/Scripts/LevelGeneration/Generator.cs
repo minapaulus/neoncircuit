@@ -32,6 +32,8 @@ public class Generator : MonoBehaviour
     public GameObject prefabPosZNegXZ;
     public GameObject prefabPosXZNegXZ;
 
+    public GameObject prefabHealthPickup;
+    public int healthPickupCount = 3;
 
     public List<GameObject> prefabEmpty;
     public List<GameObject> prefabSingle;
@@ -66,10 +68,35 @@ public class Generator : MonoBehaviour
             {
                 vertices.Add(i);
             }
-
+            
             List<Edge> mst = Kruskal.GetMinimumSpanningTree(edges, vertices);
             Grid maze = new Grid(mst, gridSizeX, gridSizeZ);
-            
+
+            // random health pickup tiles
+            List<Tuple<int, int>> containedIndices = new List<Tuple<int, int>>();
+            int j = 0;
+            while(j < healthPickupCount)
+            {
+                int x = random.Next(maze.Width - 2);
+                int y = random.Next(maze.Height - 2);
+                Tuple<int, int> temp = new Tuple<int, int>(x, y);
+                for(int k = 0; k < containedIndices.Count; k++)
+                {
+                    if (containedIndices[k].Item1 != x || containedIndices[k].Item2 != y)
+                    {
+                        containedIndices.Add(temp);
+                        maze[x, y].HasHealthPickup = true;
+                        j++;
+                        break;
+                    }
+                }
+                if (containedIndices.Count == 0)
+                {
+                    containedIndices.Add(temp);
+                    maze[x, y].HasHealthPickup = true;
+                    j++;
+                }
+            }
             PlacePrefabs(maze);
     }
 
@@ -88,6 +115,16 @@ public class Generator : MonoBehaviour
                 float scaledX = x * prefabSizeX;
                 float scaledZ = z * prefabSizeZ;
                 Vector3 placePos = startpoint + new Vector3(scaledX, 0, scaledZ);
+
+                // PICKUPS
+
+                if(maze[x, z].HasHealthPickup)
+                {
+                    Instantiate(prefabHealthPickup, placePos + new Vector3(0.5f * prefabSizeX, 0f, 0.5f * prefabSizeZ), Quaternion.identity);
+                }
+
+                // TERRAIN
+
                 if(maze[x, z].North && maze[x, z].South && maze[x, z].East && maze[x, z].West)
                 {
                     Instantiate(prefabPosXZNegXZ, placePos, Quaternion.identity);
