@@ -10,7 +10,7 @@ Material:
   m_Name: MainMenuBackground
   m_Shader: {fileID: -6465566751694194690, guid: a0dff13a3a3007843b24a5becc5d7812, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -41,9 +41,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Alpha_Sub_Strength: 0
-    - EmissionStrength: 3.23
+    - AlphaRadius: 0.41
+    - Alpha_Sub_Strength: -6.27
+    - Alpha_Tiling: 1
+    - AnimationSpeed: 0
+    - Color_Scale: 2.16
+    - EmissionStrength: 5
+    - Tiling: 4
     m_Colors:
-    - EmissionColor: {r: 0, g: 3.1047041, b: 3.9371727, a: 0}
-    - _Color: {r: 0, g: 0, b: 0, a: 1}
+    - Alpha_Center: {r: -0.41, g: 0.95, b: 0, a: 0}
+    - EmissionColor: {r: 0, g: 1, b: 0.4954052, a: 1}
+    - MousePos: {r: -4106.534, g: 867.50903, b: 0, a: 0}
+    - _Color: {r: 0, g: 1, b: 0.48977542, a: 1}
   m_BuildTextureStacks: []

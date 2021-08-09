@@ -8,15 +8,19 @@ public class Main_Menu : MonoBehaviour
     // Start is called before the first frame update
 
     public GameObject credits;
+    public float SlowmoFactor;
+
+    public Material hexagonmat;
     void Start()
     {
-        
+        Time.timeScale = SlowmoFactor;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        hexagonmat.SetVector("MousePos", Input.mousePosition - (this.transform.position));
     }
 
     public void QuitGame()
