@@ -23,7 +23,7 @@ public class Playerstats : MonoBehaviour
     private GameObject _ammoSphere;
     private Vector3 _originalScale;
 
-    public Material primaryUI;
+    public Image primaryUI;
 
     public Enemy.AssignedColors primaryColor;
     private Color _neonColor; 
@@ -122,7 +122,7 @@ public class Playerstats : MonoBehaviour
         {
             mat.SetColor("_EmissionColor", _neonColor * PrimaryAmmo / 20);
         }
-        primaryUI.SetColor("_EmissionColor", _neonColor);
+        primaryUI.material.SetColor("_EmissionColor", _neonColor);
         // Change renderer of weapon. 
 
     }
