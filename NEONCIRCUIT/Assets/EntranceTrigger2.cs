@@ -9,7 +9,7 @@ public class EntranceTrigger2 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && Bossroom.GetCurrentAnimatorStateInfo(0).IsName("Open Door"))
+        if (other.tag == "Player")
         {
             Bossroom.SetTrigger("Trigger2");
         }
