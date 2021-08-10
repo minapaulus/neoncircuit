@@ -30,7 +30,7 @@ public class SimpleShoot : AttackPattern
             stats.homingforce = Homingforce;
             stats.target = target;
             stats.source = me.gameObject;
-            Debug.Log(Weapon.Length);
+            //Debug.Log(Weapon.Length);
             weaponindice = (weaponindice + 1) % 2;
 
             var mats = stats.transform.GetChild(0).GetComponent<Renderer>().materials;

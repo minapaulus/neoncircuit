@@ -15,11 +15,14 @@ public class Gun : MonoBehaviour
     public Enemy.AssignedColors color;
     private Quaternion v;
     public Playerstats playerstats;
+    public AudioClip[] gsounds;
+    private AudioSource asource;
 
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
         playerstats.ChangePrimaryColor(color);
+        asource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -56,9 +59,19 @@ public class Gun : MonoBehaviour
                 {
                     hit.rigidbody.AddForce(-hit.normal * impactForce);
                 }
+                playSound();
                 GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 Destroy(impact, 0.3f);
             }
         }
+    }
+
+    void playSound()
+    {
+        var i = Random.Range(1, gsounds.Length);
+        asource.clip = gsounds[i];
+        asource.PlayOneShot(asource.clip);
+        gsounds[i] = gsounds[0];
+        gsounds[0] = asource.clip;
     }
 }

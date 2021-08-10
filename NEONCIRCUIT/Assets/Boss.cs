@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class Boss : Enemy
 {
-    private bool _triggered = true;
+    private bool _triggered = false;
     private GameObject _playertarget;
     public GameObject robotSphere;
     public Animator _anim;
@@ -25,7 +25,9 @@ public class Boss : Enemy
     private bool _secondPhase = false;
 
     public Hitbox HeadshotHitbox;
+    public Hitbox BasicHB;
 
+    /*
     // Two options:
     // 1. Rolls around with Animation while centerpart is damaging on stay. 
     // 2. Rolls in the middle and aims at player untill it rolls forward. Here the aim of the player is to evade possibly directing the Boss into pillars which cause Stun effects.
@@ -37,6 +39,7 @@ public class Boss : Enemy
     public float rollAttackDuration = 10f;
     public float rollAttackwindup = 1f;
     private bool _rollAttack = false;
+    */
 
     // Here Projectiles will be launched one after each other from Track spawnpoints who track (Script needed) the player. 
     // While this is happening Supporter drones will be spawned and protect the boss. 
@@ -106,6 +109,7 @@ public class Boss : Enemy
         _playertarget = GameObject.FindGameObjectWithTag("Player");
         _nAgent = GetComponent<NavMeshAgent>();
         _localSpawnPoint = Spawnpoint.position;
+        this.GetComponent<ShieldScript>().Activate(this.transform);
     }
 
     private void SetMaskRadius(float s)
@@ -118,7 +122,13 @@ public class Boss : Enemy
 
     public void TriggerBoss()
     {
-        if (!_triggered) _triggered = true;
+        if (!_triggered)
+        {
+            this.GetComponent<ShieldScript>().DeActivate(this.transform);
+            HeadshotHitbox.gameObject.SetActive(true);
+            BasicHB.gameObject.SetActive(true);
+            _triggered = true;
+        }
     }
 
     // Update is called once per frame
@@ -159,7 +169,7 @@ public class Boss : Enemy
 
     private void ChooseAction()
     {
-        if(!(_TrackingSupportAttack || _laserBeamAttack || _normalAttack || _normalRotationAttack))
+        if(!(_TrackingSupportAttack || _laserBeamAttack || _normalAttack || _normalRotationAttack) && _anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             int rando = (int)UnityEngine.Random.Range(0, 20);
 

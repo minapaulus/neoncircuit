@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class InGameMenu : MonoBehaviour
 {
     private GameObject _eSCMenu;
+
+    public float SlowmoFac;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +22,13 @@ public class InGameMenu : MonoBehaviour
             if (_eSCMenu.activeSelf)
             {
                 Time.timeScale = 1;
+                Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 Cursor.visible = false;
                 _eSCMenu.SetActive(false);
             } else
             {
-                Time.timeScale = 0;
+                Time.timeScale = SlowmoFac;
+                Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 Cursor.visible = true;
                 _eSCMenu.SetActive(true);
             }
