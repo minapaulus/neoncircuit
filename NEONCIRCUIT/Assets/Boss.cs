@@ -21,7 +21,8 @@ public class Boss : Enemy
     // is activated in second phase.
     public ColorChangerPickup red;
     // The mask widens with the health of the Boss. When it reaches maximum (10), it will trigger second phase.
-    public Material[] Masks;
+    public Renderer[] Masks;
+    private List<Material> _mats = new List<Material>();
     private bool _secondPhase = false;
 
     public Hitbox HeadshotHitbox;
@@ -105,6 +106,15 @@ public class Boss : Enemy
     protected override void Start()
     {   
         base.Start();
+
+        foreach (Renderer ren in Masks)
+        {
+            foreach (Material mat in ren.materials)
+            {
+                _mats.Add(mat);
+            }
+        }
+
         SetMaskRadius(0f);
         _playertarget = GameObject.FindGameObjectWithTag("Player");
         _nAgent = GetComponent<NavMeshAgent>();
@@ -114,7 +124,7 @@ public class Boss : Enemy
 
     private void SetMaskRadius(float s)
     {
-        foreach (Material mat in Masks)
+        foreach (Material mat in _mats)
         {
             mat.SetFloat("_MaskRadius",s);
         }

@@ -24,6 +24,7 @@ public class Playerstats : MonoBehaviour
     private Vector3 _originalScale;
 
     public Image primaryUI;
+    public Material[] HoloMaterials;
 
     public Enemy.AssignedColors primaryColor;
     private Color _neonColor; 
@@ -52,6 +53,15 @@ public class Playerstats : MonoBehaviour
 
         _ammoSphere = primaryWeaponRendererSphere.gameObject;
         _originalScale = _ammoSphere.transform.localScale;
+        SetInitColors();
+    }
+
+    void SetInitColors()
+    {
+        for(int i = 0; i < HoloMaterials.Length; i++)
+        {
+            HoloMaterials[i].SetColor("_EmissionColor", Enemy.ChooseColor((Enemy.AssignedColors) i));
+        }
     }
 
     public bool CanFirePrimary()
@@ -122,7 +132,8 @@ public class Playerstats : MonoBehaviour
         {
             mat.SetColor("_EmissionColor", _neonColor * PrimaryAmmo / 20);
         }
-        primaryUI.material.SetColor("_EmissionColor", _neonColor);
+
+        primaryUI.material = HoloMaterials[(int)newcolor];
         // Change renderer of weapon. 
 
     }
