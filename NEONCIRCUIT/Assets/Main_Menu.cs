@@ -11,6 +11,8 @@ public class Main_Menu : MonoBehaviour
     public float SlowmoFactor;
 
     public Material hexagonmat;
+    public Material hexagonmat2;
+    public Transform Buttons;
     void Start()
     {
         Cursor.visible = true;
@@ -23,6 +25,7 @@ public class Main_Menu : MonoBehaviour
     void Update()
     {
         hexagonmat.SetVector("MousePos", Input.mousePosition - (this.transform.position));
+        hexagonmat2.SetVector("MousePos", Input.mousePosition - (this.transform.position + Buttons.position + Buttons.GetChild(0).transform.position));
     }
 
     public void QuitGame()

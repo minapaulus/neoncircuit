@@ -41,6 +41,8 @@ public class InGameMenu : MonoBehaviour
         try
         {
             //Pascal muss hier vielleicht noch bisschen Magie machen, wenn das funktionieren soll mit dem Zufallsgenerator.
+            Time.timeScale = 1;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         } catch
         {

@@ -42,7 +42,8 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag != "Projectile"){
-            if (collision.gameObject.tag == targetID)
+            Debug.Log("Hit object With Tag " + collision.transform.tag);
+            if (collision.gameObject.tag == "Player")
             {
                 var stats = collision.gameObject.GetComponent<Playerstats>();
                 stats.AddHP(-Damage);
