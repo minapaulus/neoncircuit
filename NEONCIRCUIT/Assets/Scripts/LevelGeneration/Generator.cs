@@ -114,7 +114,7 @@ public class Generator : MonoBehaviour
             {
                 float scaledX = x * prefabSizeX;
                 float scaledZ = z * prefabSizeZ;
-                Vector3 placePos = startpoint + new Vector3(scaledX, 0, scaledZ);
+                Vector3 placePos = startpoint + new Vector3(scaledX, endPoint.y + 1.0f, scaledZ);
 
                 // PICKUPS
 

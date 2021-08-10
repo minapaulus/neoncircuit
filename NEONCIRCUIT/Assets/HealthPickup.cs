@@ -19,8 +19,11 @@ public class HealthPickup : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            playerstat.AddHP(restore);
-            Destroy(this.gameObject);
+            // only destroy if player was not full life already
+            if (playerstat.AddHP(restore))
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }

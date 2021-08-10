@@ -70,8 +70,11 @@ public class Playerstats : MonoBehaviour
     }
 
 
-    public void AddHP(float i)
-    {   
+    public bool AddHP(float i)
+    {
+        // if full life return false so health pickup does not get destroyed
+        if (HP == HPmax) return false;
+
         HP += i;
         if (HP > HPmax)
         {
@@ -83,7 +86,7 @@ public class Playerstats : MonoBehaviour
             HP = 0;
         }
         HPCount.fillAmount = HP / HPmax;
-
+        return true;
     }
     public void AddPrimary(float i)
     {

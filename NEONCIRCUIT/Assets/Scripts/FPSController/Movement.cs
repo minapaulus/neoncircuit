@@ -20,14 +20,14 @@ public class Movement : MonoBehaviour
     public LayerMask groundMask;
     public float unitsTravelledForReload = 1f;
 
-    private float currentlyTravlled = 0f;
+    private float currentlyTravelled = 0f;
     private Vector3 velocity;
     private bool grounded;
     private bool doubleJumped;
 
     private Playerstats stats;
 
-    // Update is called once per frame
+
     void Update()
     {
         grounded = Physics.CheckSphere(groundCheck.position, sphereRadius, groundMask);
@@ -47,13 +47,14 @@ public class Movement : MonoBehaviour
             dash = 1;
         }
 
+        // TODO: Fix player being able to move in opposite directions really fast
         // use relative coordinates to move in the direction the camera is facing
         Vector3 moveDirection = transform.right * x + transform.forward * z;
         // normalize to avoid moving at double speed when moving both vertically and horizontally
         moveDirection.Normalize();
         moveDirection = movementSpeed * moveDirection + transform.forward * dashVelocity * dash;
         Vector3 temp = moveDirection * Time.deltaTime;
-        currentlyTravlled += temp.x + temp.z;
+        currentlyTravelled += temp.x + temp.z;
         controller.Move(temp);
 
         // jumping
@@ -79,10 +80,10 @@ public class Movement : MonoBehaviour
 
     private void RefillAmmo()
     {
-        if(currentlyTravlled >= unitsTravelledForReload)
+        if(currentlyTravelled >= unitsTravelledForReload)
         {
             stats.AddPrimary(1f);
-            currentlyTravlled = 0f;
+            currentlyTravelled = 0f;
         }
     }
 }
