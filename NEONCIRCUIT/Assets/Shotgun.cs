@@ -43,15 +43,20 @@ public class Shotgun : MonoBehaviour
         {
             for(int i = 0; i <= 25; i++)
             {
-                var tilt = Quaternion.AngleAxis(Random.Range(0f, 45f), Vector3.up);
-                var spin = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.forward);
-                var tiltspin = spin * tilt;
+                //var tilt = Quaternion.AngleAxis(Random.Range(0f, 45f), Vector3.up);
+                //var spin = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.forward);
+                //var tiltspin = spin * tilt;
+                var offset = transform.up * Random.Range(0.0f, 5.0f);
+                offset = Quaternion.AngleAxis(Random.Range(0.0f, 120.0f), transform.forward) * offset;
+                var hitv = transform.forward * 10.0f + offset;
                 //var test = cam.transform.up * Random.Range(0.0f, 0.2f);
                 //var vector = cam.transform.forward * 10f + Quaternion.AngleAxis(Random.Range(0.0f, 360.0f), cam.transform.forward) * test;
-                Ray ray = new Ray(transform.position, tiltspin * cam.transform.forward);
+                var vector = hitv - transform.position;
+                vector.Normalize();
+                //Ray ray = new Ray(vector, transform.position);
                 RaycastHit hit;
                 Debug.Log("test");
-                if (Physics.Raycast(ray, out hit, range))
+                if (Physics.Raycast(transform.position, vector, out hit, range))
                 {
                     Debug.Log(hit.transform.tag);
                     if (hit.transform.tag == "Hitbox")
@@ -63,11 +68,11 @@ public class Shotgun : MonoBehaviour
                     {
                         hit.rigidbody.AddForce(-hit.normal * impactForce);
                     }
-                    playSound();
                     GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(impact, 0.3f);
                 }
             }
+            playSound();
             playerstats.AddSecondary(-1);
             //if (Physics.Raycast(transform.position, cam.transform.forward, out hit, range))
         }
