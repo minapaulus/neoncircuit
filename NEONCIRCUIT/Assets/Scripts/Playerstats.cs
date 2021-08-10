@@ -73,7 +73,7 @@ public class Playerstats : MonoBehaviour
     public bool AddHP(float i)
     {
         // if full life return false so health pickup does not get destroyed
-        if (HP == HPmax) return false;
+        if (HP == HPmax && i > 0f) return false;
 
         HP += i;
         if (HP > HPmax)
