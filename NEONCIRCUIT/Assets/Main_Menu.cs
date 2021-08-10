@@ -13,6 +13,8 @@ public class Main_Menu : MonoBehaviour
     public Material hexagonmat;
     void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         Time.timeScale = SlowmoFactor;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
@@ -51,6 +53,8 @@ public class Main_Menu : MonoBehaviour
         try
         {
             //Newgame soll die erste Scene sein nach dem Hauptmenü um Build menu.
+            Time.timeScale = 1;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
             SceneManager.LoadScene(1);
         }
         catch
