@@ -42,13 +42,11 @@ public class Gun : MonoBehaviour
 
     void Shoot()
     {
-
-        Debug.Log("SHOOOT");
-
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, cam.transform.forward, out hit, range))
+        if (playerstats.CanFirePrimary())
         {
-            if(playerstats.CanFirePrimary()) {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, cam.transform.forward, out hit, range))
+            {
                 playerstats.AddPrimary(-costs);
                 if (hit.transform.tag == "Hitbox")
                 {
@@ -59,10 +57,12 @@ public class Gun : MonoBehaviour
                 {
                     hit.rigidbody.AddForce(-hit.normal * impactForce);
                 }
-                playSound();
+                Debug.Log(hit.point);
+                Debug.Log(Quaternion.LookRotation(hit.normal));
                 GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 Destroy(impact, 0.3f);
             }
+            playSound();
         }
     }
 
