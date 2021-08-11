@@ -83,7 +83,7 @@ MonoBehaviour:
   range: 100
   costs: 1
   cam: {fileID: 4192448781522642060}
-  impactEffect: {fileID: 100006, guid: 0438351a6e6422d43a09930e9be00ee9, type: 3}
+  impactEffect: {fileID: 8597481081608407756, guid: f66c0b571c81a1b4fb84bf2890f5fe92, type: 3}
   impactForce: 30
   firetime: 0
   firerate: 0.3
@@ -734,6 +734,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   unitsTravelledForReload: 1
+  stats: {fileID: 0}
+  dashCooldown: 2
 --- !u!114 &4192448781398043739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -963,7 +965,7 @@ MonoBehaviour:
   range: 300
   maxSpread: 10
   cam: {fileID: 4192448781522642060}
-  impactEffect: {fileID: 100006, guid: 0438351a6e6422d43a09930e9be00ee9, type: 3}
+  impactEffect: {fileID: 5997919105974743125, guid: 60d2c08a0735c7b4b837bb20d7b73c81, type: 3}
   impactForce: 200
   firetime: 0
   firerate: 2
