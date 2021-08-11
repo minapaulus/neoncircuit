@@ -20,6 +20,8 @@ public class Playerstats : MonoBehaviour
     private List<Material> _primaryWeaponMats = new List<Material>();
     public Renderer primaryWeaponRendererSphere;
     private List<Material> _primaryWeaponSphereMat = new List<Material>();
+
+    private List<Renderer> ParticleEffects = new List<Renderer>();
     private GameObject _ammoSphere;
     private Vector3 _originalScale;
 
@@ -54,6 +56,25 @@ public class Playerstats : MonoBehaviour
         _ammoSphere = primaryWeaponRendererSphere.gameObject;
         _originalScale = _ammoSphere.transform.localScale;
         SetInitColors();
+    }
+
+    public void ChangeColorOfparticle(GameObject particle)
+    {
+        particle.GetComponent<Renderer>().material.SetColor("_EmissionColor", _neonColor * 1);
+        ParticleEffects = new List<Renderer>();
+
+        for (int i = 0; i < particle.transform.childCount; i++)
+        {
+            ParticleEffects.Add(particle.transform.GetChild(i).GetComponent<Renderer>());
+        }
+        foreach (Renderer ren in ParticleEffects)
+        {
+            foreach (Material mat in ren.materials)
+            {
+                mat.SetColor("_EmissionColor", _neonColor * 1);
+            }
+        }
+
     }
 
     void SetInitColors()

@@ -60,6 +60,7 @@ public class Gun : MonoBehaviour
                 Debug.Log(hit.point);
                 Debug.Log(Quaternion.LookRotation(hit.normal));
                 GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                playerstats.ChangeColorOfparticle(impact);
                 Destroy(impact, 0.3f);
             }
             playSound();
