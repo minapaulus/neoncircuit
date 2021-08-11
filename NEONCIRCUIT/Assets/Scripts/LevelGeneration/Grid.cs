@@ -22,6 +22,37 @@ public class Grid
     public Tile Start => entries[0, 0];
     public Tile End => entries[Width - 1, Height - 1];
 
+    public void RemoveSomeWalls()
+    {
+        for(int i = 1; i < Width - 1; i++)
+        {
+            for(int j = 1; j < Height - 1; j++)
+            {
+                int rand = Generator.random.Next(4);
+                for(int k = 0; k <= rand; k++)
+                {
+                    int direction = Generator.random.Next(4);
+                    switch (direction)
+                    {
+                        case 0:
+                            entries[i, j].North = true;
+
+                            break;
+                        case 1:
+                            entries[i, j].South = true;
+                            break;
+                        case 2:
+                            entries[i, j].East = true;
+                            break;
+                        default:
+                            entries[i, j].West = true;
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
     public Grid(List<Edge> mst, int width, int height)
     {
         this.width = width;
