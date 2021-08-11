@@ -25,8 +25,15 @@ public class Movement : MonoBehaviour
     private bool grounded;
     private bool doubleJumped;
 
-    private Playerstats stats;
+    public Playerstats stats;
 
+    private float timeSinceLastDash = 10f;
+    public float dashCooldown = 2f;
+
+    void Start()
+    {
+        timeSinceLastDash = dashCooldown;
+    }
 
     void Update()
     {
@@ -42,10 +49,12 @@ public class Movement : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         
         int dash = 0;
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        if(Input.GetKeyDown(KeyCode.LeftShift) && timeSinceLastDash >= dashCooldown)
         {
             dash = 1;
+            timeSinceLastDash = 0f;
         }
+        timeSinceLastDash += Time.deltaTime;
 
         // TODO: Fix player being able to move in opposite directions really fast
         // use relative coordinates to move in the direction the camera is facing
@@ -54,7 +63,8 @@ public class Movement : MonoBehaviour
         moveDirection.Normalize();
         moveDirection = movementSpeed * moveDirection + transform.forward * dashVelocity * dash;
         Vector3 temp = moveDirection * Time.deltaTime;
-        currentlyTravelled += temp.x + temp.z;
+        currentlyTravelled += Mathf.Abs(temp.x) + Mathf.Abs(temp.z);
+        Debug.Log(currentlyTravelled);
         controller.Move(temp);
 
         // jumping
@@ -76,13 +86,15 @@ public class Movement : MonoBehaviour
         // v = 0.5 * g * t^2
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        RefillAmmo();
     }
 
     private void RefillAmmo()
     {
         if(currentlyTravelled >= unitsTravelledForReload)
         {
-            stats.AddPrimary(1f);
+            stats.AddSecondary(1f);
             currentlyTravelled = 0f;
         }
     }

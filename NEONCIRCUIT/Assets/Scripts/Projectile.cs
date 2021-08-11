@@ -12,8 +12,15 @@ public class Projectile : MonoBehaviour
     public GameObject source = null;
     public Transform target;
     public float Velocity = 0;
-
+    public AudioClip sound1;
+    private AudioSource ssource;
     public float Damage = 0f;
+
+    private void Start()
+    {
+        ssource = GetComponent<AudioSource>();
+        playSound(sound1);
+    }
 
     protected virtual void Update()
     {
@@ -26,6 +33,13 @@ public class Projectile : MonoBehaviour
             CorrectPath();
             timeelapsed += Time.deltaTime;
         }
+    }
+
+    void playSound(AudioClip sound)
+    {
+        ssource.clip = sound;
+        ssource.loop = true;
+        ssource.Play();
     }
 
     private void CorrectPath()

@@ -18,6 +18,14 @@ public class Boss : Enemy
 
     private bool _setPoint = false;
 
+    public AudioClip sound1;
+    public AudioClip sound2;
+    public AudioClip sound3;
+    public AudioClip sound4;
+    public AudioClip sound5;
+    public AudioClip sound6;
+    private AudioSource sasource;
+
     // is activated in second phase.
     public ColorChangerPickup red;
     // The mask widens with the health of the Boss. When it reaches maximum (10), it will trigger second phase.
@@ -120,6 +128,7 @@ public class Boss : Enemy
         _nAgent = GetComponent<NavMeshAgent>();
         _localSpawnPoint = Spawnpoint.position;
         this.GetComponent<ShieldScript>().Activate(this.transform);
+        sasource = GetComponent<AudioSource>();
     }
 
     private void SetMaskRadius(float s)
@@ -207,6 +216,12 @@ public class Boss : Enemy
         }
     }
 
+    void playSound(AudioClip sound)
+    {
+        sasource.clip = sound;
+        sasource.PlayOneShot(sasource.clip);
+    }
+
     private void Debuging()
     {
         // Debug
@@ -262,7 +277,8 @@ public class Boss : Enemy
                 BeamPortalOut.SetActive(true);
                 //PortalLogic();
             }
-            //Sound
+            Debug.Log("Beam Attack Windup");
+            playSound(sound3);
         }
 
         if (_anim.GetCurrentAnimatorStateInfo(0).IsName("BeamAttack"))
@@ -279,7 +295,8 @@ public class Boss : Enemy
         {
             BeamPortalIn.SetActive(false);
             BeamPortalOut.SetActive(false);
-            //Sound
+            Debug.Log("Beam Attack Windup-End");
+            playSound(sound3);
         }
 
         if (_anim.GetCurrentAnimatorStateInfo(0).IsName("BeamAttack-End") && (_anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= .6f))
@@ -308,7 +325,8 @@ public class Boss : Enemy
 
         if (_anim.GetCurrentAnimatorStateInfo(0).IsName("SupportAttack-Windup"))
         {
-            //Sound
+            Debug.Log("SupportAttack-Windup");
+            //playSound(sound2);
         }
 
         if (_anim.GetCurrentAnimatorStateInfo(0).IsName("SupportAttack"))
@@ -330,7 +348,8 @@ public class Boss : Enemy
 
         if (_anim.GetCurrentAnimatorStateInfo(0).IsName("SupportAttack-Windup-End"))
         {
-            //Sound
+            Debug.Log("Support Attack Windup-End");
+            //playSound(sound2);
         }
 
         if (_anim.GetCurrentAnimatorStateInfo(0).IsName("Support-End") && (_anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= .6f))
@@ -473,7 +492,8 @@ public class Boss : Enemy
             }
         }
         // Lass es schieﬂen. Simple as that.
-        //Sound
+        Debug.Log("Attack Support Attack");
+        playSound(sound4);
         return;
     }
 
@@ -481,7 +501,8 @@ public class Boss : Enemy
     {
         DamageHP(-(hOTValuePerSecond * Time.deltaTime));
         //Spawn a FX Effect which suggests Heals??
-        // Sound
+        Debug.Log("Health Support Attack");
+        playSound(sound4);
     }
 
     private void SpawnSupporters()
@@ -550,13 +571,16 @@ public class Boss : Enemy
         }
 
         if (_anim.GetCurrentAnimatorStateInfo(0).IsName("RotationAttack-Windup"))
-        {   
-            //Sound
+        {
+            playSound(sound5);
+            Debug.Log("Rotation Attack-Windup");
         }
 
         if (_anim.GetCurrentAnimatorStateInfo(0).IsName("RotationAttack"))
         {
-            //Sound
+            playSound(sound5);
+            Debug.Log("Rotation Attack");
+            playSound(sound2);
 
             //Flyer Code Attack.
             if (RotationAttackObject)
@@ -630,6 +654,8 @@ public class Boss : Enemy
                 int k = (int)UnityEngine.Random.Range(0, goodTurrets.Count -1);
                 Instantiate(TurretPrefab, goodTurrets[k].transform.position, goodTurrets[k].transform.rotation);
                 // Sound an Stelle.
+                playSound(sound6);
+                Debug.Log("Spawn Turrets");
                 goodTurrets.RemoveAt(k);
             }
             _TurretspawnSupportAttack = true;
