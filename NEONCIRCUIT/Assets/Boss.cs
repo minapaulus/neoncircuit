@@ -64,6 +64,7 @@ public class Boss : Enemy
     public GameObject[] Supporterpos;
     public GameObject SupporterPrefab;
     private int _aliveSups = 0;
+    private List<GameObject> _listSup = new List<GameObject>();
     public float hOTValuePerSecond = 10f;
     private bool _supportset = false;
 
@@ -162,7 +163,7 @@ public class Boss : Enemy
 
         if (_triggered)
         {
-            ChooseAction();
+            //ChooseAction();
 
             if (_normalAttack)
             {
@@ -440,7 +441,10 @@ public class Boss : Enemy
 
     public void SupporterKilled(GameObject supporter)
     {
+        if (_listSup.Contains(supporter)) return;
+        _listSup.Add(supporter);
         _aliveSups--;
+        if (_aliveSups <= 0) _aliveSups = 0;
         Debug.Log("Supporter Killed, Left: " + _aliveSups);
         // Deactivate corresponding Shield.
     }
@@ -685,6 +689,7 @@ public class Boss : Enemy
         _anim.ResetTrigger("Walkmid");
         _anim.SetBool("BeamAttack", false);
         _duration = 0f;
+        _listSup = new List<GameObject>();
 
         BeamPortalOut.transform.localPosition = new Vector3(0, BeamPortalOut.transform.position.y, 0);
 

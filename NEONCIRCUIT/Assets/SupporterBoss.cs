@@ -17,7 +17,6 @@ public class SupporterBoss : Enemy
     // Update is called once per frame
     protected override void Update()
     {
-        base.Update();
         this.transform.LookAt(Boss.transform.GetChild(0).transform.position);
     }
 
