@@ -11,6 +11,11 @@ public class HealthPickup : MonoBehaviour
     [Range(0, 2)]
     public float rotationSpeed = .5f;
 
+    private void Start()
+    {
+        playerstat = GameObject.FindGameObjectWithTag("Player").GetComponent<Playerstats>();
+    }
+
     private void Update()
     {
         this.transform.Rotate(new Vector3(0, rotationSpeed * 360 * Time.deltaTime, 0 ));
