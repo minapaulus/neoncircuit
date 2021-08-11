@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 138399900}
   - component: {fileID: 138399902}
   - component: {fileID: 138399901}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -663,6 +663,7 @@ GameObject:
   - component: {fileID: 217737144}
   - component: {fileID: 217737143}
   - component: {fileID: 217737142}
+  - component: {fileID: 217737146}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -772,7 +773,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2147483647
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -784,6 +785,23 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &217737146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217737140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 0c32e436654385c4d813d2ec5dd71429, type: 2}
 --- !u!1 &236143439
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +875,7 @@ GameObject:
   - component: {fileID: 320450458}
   - component: {fileID: 320450460}
   - component: {fileID: 320450459}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1765,7 +1783,7 @@ GameObject:
   - component: {fileID: 1117538280}
   - component: {fileID: 1117538282}
   - component: {fileID: 1117538281}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Gun Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2082,7 +2100,7 @@ GameObject:
   - component: {fileID: 1144125972}
   - component: {fileID: 1144125974}
   - component: {fileID: 1144125973}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2285,6 +2303,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fire_sleet
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 808d8bedf2d978e47a4a056a0c33f3d9, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 808d8bedf2d978e47a4a056a0c33f3d9, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2359,7 +2381,7 @@ GameObject:
   - component: {fileID: 1498881755}
   - component: {fileID: 1498881757}
   - component: {fileID: 1498881756}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Gun Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2440,7 +2462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1586870204}
   - component: {fileID: 1586870205}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CurrentWeapon (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2779,7 +2801,7 @@ GameObject:
   - component: {fileID: 2004321501}
   - component: {fileID: 2004321503}
   - component: {fileID: 2004321502}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cyberweapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
