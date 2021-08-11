@@ -3,7 +3,9 @@ using UnityEngine;
 public class Shotgun : MonoBehaviour
 {
     public float damage = 20f;
+    public float pellets = 25f;
     public float range = 100f;
+    public float maxSpread = 10f;
     public Camera cam;
     public GameObject impactEffect;
     public float impactForce = 200f;
@@ -41,22 +43,37 @@ public class Shotgun : MonoBehaviour
 
         if (playerstats.CanFireSecondary())
         {
-            for(int i = 0; i <= 25; i++)
+            for(int i = 0; i < pellets; i++)
             {
+                /*
                 var offset = transform.up * Random.Range(0.0f, 5.0f);
                 offset = Quaternion.AngleAxis(Random.Range(0.0f, 30.0f), transform.forward) * offset;
                 var hitv = transform.forward * 10.0f + offset;
                 var vector = hitv - transform.position;
                 vector.Normalize();
                 //Ray ray = new Ray(vector, transform.position);
+                */
+
+                //Try Niklas the first: 
+                Quaternion originalCamRot = cam.transform.rotation;
+                Vector3 vector = cam.transform.forward;
+                Quaternion camAngle = cam.transform.rotation;
+
+                Quaternion angle = Random.rotation;
+                camAngle = Quaternion.RotateTowards(camAngle, angle, maxSpread);
+
+                vector = camAngle * vector;
+                vector.Normalize();
+
+                cam.transform.rotation = camAngle;
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, vector, out hit, range))
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, range))
                 {
                     Debug.Log(hit.transform.tag);
                     if (hit.transform.tag == "Hitbox")
                     {
                         var hbox = hit.transform.GetComponent<Hitbox>();
-                        hbox.Damage(_player, color, damage);
+                        hbox.Damage(_player, color, damage/pellets);
                     }
                     if (hit.rigidbody != null)
                     {
@@ -65,9 +82,11 @@ public class Shotgun : MonoBehaviour
                     GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(impact, 0.3f);
                 }
+                cam.transform.rotation = originalCamRot;
             }
+
             playSound();
-            playerstats.AddSecondary(-1);
+            playerstats.AddSecondary(1);
             //if (Physics.Raycast(transform.position, cam.transform.forward, out hit, range))
         }
     }
