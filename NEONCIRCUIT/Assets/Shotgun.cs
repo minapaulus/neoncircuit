@@ -86,7 +86,7 @@ public class Shotgun : MonoBehaviour
             }
 
             playSound();
-            playerstats.AddSecondary(1);
+            playerstats.AddSecondary(-1);
             //if (Physics.Raycast(transform.position, cam.transform.forward, out hit, range))
         }
     }
