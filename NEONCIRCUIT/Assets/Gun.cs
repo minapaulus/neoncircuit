@@ -57,8 +57,6 @@ public class Gun : MonoBehaviour
                 {
                     hit.rigidbody.AddForce(-hit.normal * impactForce);
                 }
-                Debug.Log(hit.point);
-                Debug.Log(Quaternion.LookRotation(hit.normal));
                 GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 Destroy(impact, 0.3f);
             }
