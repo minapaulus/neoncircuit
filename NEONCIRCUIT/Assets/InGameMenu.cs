@@ -7,8 +7,9 @@ public class InGameMenu : MonoBehaviour
 {
     private GameObject _eSCMenu;
     public Playerstats playerstat;
+    public float slowdownlength = .5f;
 
-    public float SlowmoFac;
+    public float SlowmoFac = 0.2f;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,14 +23,16 @@ public class InGameMenu : MonoBehaviour
         {
             if (_eSCMenu.activeSelf)
             {
-                Time.timeScale = 1;
+                StopAllCoroutines();
+                StartCoroutine(ManipulateTime(1));
                 Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 _eSCMenu.SetActive(false);
             } else
             {
-                Time.timeScale = SlowmoFac;
+                StopAllCoroutines();
+                StartCoroutine(ManipulateTime(SlowmoFac));
                 Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
@@ -37,11 +40,44 @@ public class InGameMenu : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.B))
         {
-            playerstat.LoadPlayer();
+            if (Time.timeScale >= 1)
+            {
+                StopAllCoroutines();
+                StartCoroutine(ManipulateTime(SlowmoFac));
+            }
+            else
+            {
+                StopAllCoroutines();
+                StartCoroutine(ManipulateTime(1));
+            }
         }
         
+    }
+
+    IEnumerator ManipulateTime(float target)
+    {
+        if (Time.timeScale >= target)
+        {
+            while (Time.timeScale >= target)
+            {
+                Time.timeScale -= (1f / slowdownlength) * Time.unscaledDeltaTime;
+                yield return null;
+            }
+            Time.timeScale = target;
+
+        }
+        else
+        {
+            while (Time.timeScale < target)
+            {
+                Time.timeScale += (1f / slowdownlength) * Time.unscaledDeltaTime;
+                yield return null;
+            }
+            Time.timeScale = target;
+
+        }
     }
 
     public void RestartScenewithCount()

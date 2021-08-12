@@ -1999,6 +1999,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player with UI
       objectReference: {fileID: 0}
+    - target: {fileID: 4192448780310067494, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
+      propertyPath: m_TagString
+      value: Gun
+      objectReference: {fileID: 0}
     - target: {fileID: 4192448781398043716, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
       propertyPath: m_LocalPosition.x
       value: -175.6
@@ -2062,6 +2066,14 @@ PrefabInstance:
     - target: {fileID: 5006212916481068635, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006212917168984827, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
+      propertyPath: SlowmoFac
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006212917168984827, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
+      propertyPath: slowdownlength
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
