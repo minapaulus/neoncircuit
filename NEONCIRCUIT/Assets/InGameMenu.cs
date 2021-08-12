@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class InGameMenu : MonoBehaviour
 {
     private GameObject _eSCMenu;
+    public Playerstats playerstat;
 
     public float SlowmoFac;
     // Start is called before the first frame update
@@ -23,6 +24,7 @@ public class InGameMenu : MonoBehaviour
             {
                 Time.timeScale = 1;
                 Time.fixedDeltaTime = Time.timeScale * 0.02f;
+                Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 _eSCMenu.SetActive(false);
             } else
@@ -30,19 +32,40 @@ public class InGameMenu : MonoBehaviour
                 Time.timeScale = SlowmoFac;
                 Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 _eSCMenu.SetActive(true);
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            playerstat.LoadPlayer();
         }
         
     }
 
-    public void RestartScene()
+    public void RestartScenewithCount()
     {
         try
         {
             //Pascal muss hier vielleicht noch bisschen Magie machen, wenn das funktionieren soll mit dem Zufallsgenerator.
+            GameObject.FindGameObjectWithTag("Manager").GetComponent<LoadAndSafeScene>().LoadsScene = true;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         } catch
+        {
+
+        }
+    }
+
+    public void RestartScenenNewSafeFile()
+    {
+        try
+        {
+            //Pascal muss hier vielleicht noch bisschen Magie machen, wenn das funktionieren soll mit dem Zufallsgenerator.
+            GameObject.FindGameObjectWithTag("Manager").GetComponent<LoadAndSafeScene>().LoadsScene = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        catch
         {
 
         }
@@ -52,6 +75,7 @@ public class InGameMenu : MonoBehaviour
     {
         try
         {
+            playerstat.SavePlayer();
             SceneManager.LoadScene(0);
         } catch
         {
@@ -59,10 +83,21 @@ public class InGameMenu : MonoBehaviour
         }
     }
 
+    public void SaveScene()
+    {
+        playerstat.SavePlayer();
+    }
+
+    public void LoadScene()
+    {
+        playerstat.LoadPlayer();
+    }
+
     public void QuitGame()
     {
         try
         {
+            playerstat.SavePlayer();
             Application.Quit();
         }catch
         {

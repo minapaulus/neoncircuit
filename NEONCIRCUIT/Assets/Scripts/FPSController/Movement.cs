@@ -64,7 +64,7 @@ public class Movement : MonoBehaviour
         moveDirection = movementSpeed * moveDirection + transform.forward * dashVelocity * dash;
         Vector3 temp = moveDirection * Time.deltaTime;
         currentlyTravelled += Mathf.Abs(temp.x) + Mathf.Abs(temp.z);
-        Debug.Log(currentlyTravelled);
+        //Debug.Log(currentlyTravelled);
         controller.Move(temp);
 
         // jumping

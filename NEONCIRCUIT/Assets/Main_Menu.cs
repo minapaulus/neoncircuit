@@ -55,6 +55,23 @@ public class Main_Menu : MonoBehaviour
             //Newgame soll die erste Scene sein nach dem Hauptmenü um Build menu.
             Time.timeScale = 1;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
+            GameObject.FindGameObjectWithTag("Manager").GetComponent<LoadAndSafeScene>().LoadsScene = false;
+            SceneManager.LoadScene(1);
+        }
+        catch
+        {
+
+        }
+    }
+
+    public void Continue()
+    {
+        try
+        {
+            //Newgame soll die erste Scene sein nach dem Hauptmenü um Build menu.
+            Time.timeScale = 1;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
+            GameObject.FindGameObjectWithTag("Manager").GetComponent<LoadAndSafeScene>().LoadsScene = true;
             SceneManager.LoadScene(1);
         }
         catch
