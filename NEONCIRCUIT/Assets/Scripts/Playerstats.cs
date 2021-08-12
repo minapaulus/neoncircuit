@@ -221,7 +221,6 @@ public class Playerstats : MonoBehaviour
         {
 
             Checkpoint = data.hasReachedCheckpoint;
-            Debug.Log(Checkpoint);
 
             if (Checkpoint && CheckpointObject != null)
             {
@@ -230,9 +229,15 @@ public class Playerstats : MonoBehaviour
                 this.gameObject.GetComponent<CharacterController>().enabled = true;
                 this.gameObject.transform.rotation = CheckpointObject.transform.rotation;
 
+                CptColor = (Enemy.AssignedColors) data.assignedColor;
+                CptPrimary = data.PrimAmmo;
+                CptSecondary = data.secAmmo;
+                CptHP = data.HP;
                 primaryColor = (Enemy.AssignedColors)data.assignedColor;
+                GameObject.FindGameObjectWithTag("Gun").GetComponent<Gun>().color = (Enemy.AssignedColors)data.assignedColor;
                 PrimaryAmmo = data.PrimAmmo;
                 SecondaryAmmo = data.secAmmo;
+                HP = data.HP;
                 ChangePrimaryColor(primaryColor);
                 AddHP(0);
                 AddPrimary(0);
