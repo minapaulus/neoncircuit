@@ -25,7 +25,6 @@ public class InGameMenu : MonoBehaviour
             {
                 StopAllCoroutines();
                 StartCoroutine(ManipulateTime(1));
-                Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 _eSCMenu.SetActive(false);
@@ -33,7 +32,6 @@ public class InGameMenu : MonoBehaviour
             {
                 StopAllCoroutines();
                 StartCoroutine(ManipulateTime(SlowmoFac));
-                Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 _eSCMenu.SetActive(true);
@@ -78,6 +76,8 @@ public class InGameMenu : MonoBehaviour
             Time.timeScale = target;
 
         }
+
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 
     public void RestartScenewithCount()
@@ -85,6 +85,9 @@ public class InGameMenu : MonoBehaviour
         try
         {
             //Pascal muss hier vielleicht noch bisschen Magie machen, wenn das funktionieren soll mit dem Zufallsgenerator.
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
+            playerstat.SavePlayer();
             GameObject.FindGameObjectWithTag("Manager").GetComponent<LoadAndSafeScene>().LoadsScene = true;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         } catch
@@ -98,6 +101,8 @@ public class InGameMenu : MonoBehaviour
         try
         {
             //Pascal muss hier vielleicht noch bisschen Magie machen, wenn das funktionieren soll mit dem Zufallsgenerator.
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
             GameObject.FindGameObjectWithTag("Manager").GetComponent<LoadAndSafeScene>().LoadsScene = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
@@ -133,6 +138,8 @@ public class InGameMenu : MonoBehaviour
     {
         try
         {
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
             playerstat.SavePlayer();
             Application.Quit();
         }catch

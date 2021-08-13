@@ -111,6 +111,9 @@ public class Boss : Enemy
     public float maxDuration = 5f;
     public ShootWhenRdy RotationAttackObject;
 
+    public GameObject DeathParticles;
+    public GameObject EndGate;
+
     // Start is called before the first frame update
     protected override void Start()
     {   
@@ -158,12 +161,12 @@ public class Boss : Enemy
 
         if (_playertarget == null) return;
 
-        Debuging();
+        //Debuging();
         // When damaged the red marks on the bottom should spread out and if red phase begins be fully extruded. With damage to the red phase, the mask will shrink again.
 
         if (_triggered)
         {
-            //ChooseAction();
+            ChooseAction();
 
             if (_normalAttack)
             {
@@ -774,8 +777,10 @@ public class Boss : Enemy
 
     public override void DamageHP(float dmg)
     {
-        base.DamageHP(dmg); 
-        if(base.healthPoints > base.initialHP/3 && !_secondPhase)
+        if (base.healthPoints - dmg <= base.initialHP) base.healthPoints -= dmg;
+        else base.healthPoints = base.initialHP;
+        base.ChangeColor(base.initcolor);
+        if (base.healthPoints > base.initialHP/3 && !_secondPhase)
         {
             // Here we are in the range of 333 until 999 HP.
             // We want to enlarge the mask until it reaches 10 at 333. Lower than 333 triggers second Phase.
@@ -785,6 +790,10 @@ public class Boss : Enemy
             if(base.healthPoints <= 0)
             {
                 //Initiate End of Bossfight.
+
+                Instantiate(DeathParticles, transform.position, transform.rotation);
+                EndGate.SetActive(true);
+                base.Die();
             }
             if (!_secondPhase)
             {

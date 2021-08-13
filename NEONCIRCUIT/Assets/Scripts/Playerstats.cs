@@ -51,6 +51,11 @@ public class Playerstats : MonoBehaviour
     public Image SecondaryAmmoCount;
     private bool _dead = false;
 
+    public GameObject EndGameUI;
+    public GameObject DeathGameUI;
+    public Text DeathText;
+    public Text TimeText;
+
     private void Awake()
     {
         //Error if none is selected.
@@ -77,7 +82,7 @@ public class Playerstats : MonoBehaviour
 
     private void Update()
     {
-        if (!succeeded)
+        if (!succeeded && !_dead)
         {
             time += Time.deltaTime;
             //Debug.Log(time);
@@ -154,6 +159,11 @@ public class Playerstats : MonoBehaviour
             deaths++;
             _dead = true;
             SavePlayer();
+            DeathGameUI.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0f;
+
         }
         //Activate Death UI;
     }
@@ -277,10 +287,19 @@ public class Playerstats : MonoBehaviour
             SavePlayer();
         }
     }
-    private void EndGame()
+    public void EndGame()
     {
         //is called when Boss is dead.
         succeeded = true;
+        SavePlayer();
+        DeathText.text = "You died " + deaths.ToString() + " Times.";
+        var minutes = (int) (time / 60f);
+        var seconds = (int)(time % 60f);
+        TimeText.text = "It took you " + minutes.ToString() + ":" + seconds.ToString() + " minutes.";
+        EndGameUI.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0f;
         //Enable UI where we set Textfields for Death and Time with two buttons to get to main menu or restart or Quit and deactivate pause menu object.
     }
 }
