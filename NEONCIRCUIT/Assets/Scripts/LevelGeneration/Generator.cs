@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.AI;
 
 public class Generator : MonoBehaviour
 {
@@ -36,13 +37,15 @@ public class Generator : MonoBehaviour
     public GameObject prefabHealthPickup;
     public int healthPickupCount = 3;
 
+    public GameObject prefabSpawner;
+
     public List<GameObject> prefabEmpty;
     public List<GameObject> prefabSingle;
     public List<GameObject> prefabDouble;
     public List<GameObject> prefabTriple;
     public List<GameObject> prefabClosed;
 
-    public List<GameObject> enemies;
+    public List<NavMeshSurface> surfaces = new List<NavMeshSurface>();
 
     private int seed;
     private int gridSeed;
@@ -60,8 +63,8 @@ public class Generator : MonoBehaviour
     void Start()
     {
         seed = Environment.TickCount;
-        random = new System.Random(2574796);
-        Debug.Log("SEED: " + seed);
+        random = new System.Random(seed);
+
         List<Edge> edges = new List<Edge>();
         for (int y = 0; y < gridSizeZ; y++)
         {
@@ -89,11 +92,27 @@ public class Generator : MonoBehaviour
 
         List<Edge> mst = Kruskal.GetMinimumSpanningTree(edges, vertices);
         Grid maze = new Grid(mst, gridSizeX, gridSizeZ);
+
+        // make world more open
         maze.RemoveSomeWalls();
 
-        Debug.Log("Grid: " + maze.Seed);
+        for(int i = 0; i < maze.Width; i++)
+        {
+            for(int j = 0; j < maze.Height; j++)
+            {
+                int rand = random.Next(100);
+                if(rand < 10)
+                {
+                    maze[i, j].HasHealthPickup = true;
+                }
+                else if(rand < 30)
+                {
+                    maze[i, j].HasSpawner = true;
+                }
+            }
+        }
 
-        // random health pickup tiles
+        /*// random health pickup tiles
         List<Tuple<int, int>> containedIndices = new List<Tuple<int, int>>();
         int j = 0;
         while (j < healthPickupCount)
@@ -117,8 +136,19 @@ public class Generator : MonoBehaviour
                 maze[x, y].HasHealthPickup = true;
                 j++;
             }
-        }
+        }*/
+
+
         PlacePrefabs(maze);
+        CalculateNavMeshSurfaces();
+    }
+
+    void CalculateNavMeshSurfaces()
+    {
+        foreach(var surface in surfaces)
+        {
+            surface.BuildNavMesh();
+        }
     }
 
     void PlacePrefabs(Grid maze)
@@ -141,9 +171,14 @@ public class Generator : MonoBehaviour
 
                 if (maze[x, z].HasHealthPickup)
                 {
-                    //Instantiate(prefabHealthPickup, placePos + new Vector3(0.5f * prefabSizeX, 0f, 0.5f * prefabSizeZ), Quaternion.identity);
+                    Instantiate(prefabHealthPickup, placePos + new Vector3(0.5f * prefabSizeX, 0f, 0.5f * prefabSizeZ), Quaternion.identity);
+                }
+                
+                // ENEMIES
 
-                    Instantiate(enemies[0], placePos, Quaternion.identity);
+                if(maze[x, z].HasSpawner)
+                {
+                    Instantiate(prefabSpawner, placePos + new Vector3(0.5f * prefabSizeX, 0f, 0.5f * prefabSizeZ), Quaternion.identity);
                 }
 
                 // TERRAIN
@@ -151,8 +186,6 @@ public class Generator : MonoBehaviour
                 if (maze[x, z].North && maze[x, z].South && maze[x, z].East && maze[x, z].West)
                 {
                     Instantiate(prefabPosXZNegXZ, placePos, Quaternion.identity);
-                    /*int rand = random.Next(prefabEmpty.Count);
-                    Instantiate(prefabEmpty[rand], new Vector3(scaledX, 0, scaledZ), Quaternion.identity);*/
                 }
                 else if (maze[x, z].North && maze[x, z].South && maze[x, z].East)
                 {

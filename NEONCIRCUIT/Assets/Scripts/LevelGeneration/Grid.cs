@@ -59,7 +59,7 @@ public class Grid
     public Grid(List<Edge> mst, int width, int height)
     {
         Seed = Environment.TickCount;
-        random = new Random(2574812);
+        random = new Random(Seed);
         this.width = width;
         this.height = height;
         entries = new Tile[width, height];
