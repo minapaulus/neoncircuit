@@ -219,6 +219,11 @@ Transform:
   m_Father: {fileID: 236143440}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!81 &96076641 stripped
+AudioListener:
+  m_CorrespondingSourceObject: {fileID: 4192448781522642061, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
+  m_PrefabInstance: {fileID: 4192448781449904949}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &194437858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1287,6 +1292,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1199148788, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199148790, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
+      propertyPath: m_Size.y
+      value: 4.699581
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199148790, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
+      propertyPath: m_Center.y
+      value: 1.8497906
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199148791, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af1f5036867147849aaa40415d87c255, type: 2}
+    - target: {fileID: 1199148793, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 13.281627
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199148793, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199148793, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 13.281627
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199148793, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.62
+      objectReference: {fileID: 0}
     - target: {fileID: 1138921297758350303, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
       propertyPath: m_Name
       value: Boss level parent
@@ -1943,6 +1980,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player with UI
       objectReference: {fileID: 0}
+    - target: {fileID: 4192448781398043739, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
+      propertyPath: listener
+      value: 
+      objectReference: {fileID: 96076641}
     - target: {fileID: 4192448781398043739, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
       propertyPath: CheckpointObject
       value: 
