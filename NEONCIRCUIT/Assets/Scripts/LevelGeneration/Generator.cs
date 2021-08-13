@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class Generator : MonoBehaviour
 {
-    public static System.Random random = new System.Random();
+    private System.Random random;
 
     public int gridSizeX = 10;
     public int gridSizeZ = 10;
@@ -43,9 +44,24 @@ public class Generator : MonoBehaviour
 
     public List<GameObject> enemies;
 
+    private int seed;
+    private int gridSeed;
+
+    public void Save(string path)
+    {
+        using (StreamWriter wr = new StreamWriter(path, false))
+        {
+            // add other stuff
+            wr.WriteLine(seed);
+            wr.WriteLine(gridSeed);
+        }
+    }
+
     void Start()
     {
-
+        seed = Environment.TickCount;
+        random = new System.Random(2574796);
+        Debug.Log("SEED: " + seed);
         List<Edge> edges = new List<Edge>();
         for (int y = 0; y < gridSizeZ; y++)
         {
@@ -74,6 +90,8 @@ public class Generator : MonoBehaviour
         List<Edge> mst = Kruskal.GetMinimumSpanningTree(edges, vertices);
         Grid maze = new Grid(mst, gridSizeX, gridSizeZ);
         maze.RemoveSomeWalls();
+
+        Debug.Log("Grid: " + maze.Seed);
 
         // random health pickup tiles
         List<Tuple<int, int>> containedIndices = new List<Tuple<int, int>>();
