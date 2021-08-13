@@ -19,7 +19,7 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         ssource = GetComponent<AudioSource>();
-        playSound(sound1);
+        //playSound(sound1);
     }
 
     protected virtual void Update()

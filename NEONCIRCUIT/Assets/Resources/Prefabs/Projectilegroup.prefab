@@ -165,7 +165,7 @@ MonoBehaviour:
   source: {fileID: 0}
   target: {fileID: 0}
   Velocity: 0
-  sound1: {fileID: 8300000, guid: 32bd1b6b2217f46029379c96340f03b1, type: 3}
+  sound1: {fileID: 8300000, guid: b3ad97ed1f5004cfca5c0848226856c9, type: 3}
   Damage: 5
 --- !u!82 &1597525719630657046
 AudioSource:
@@ -179,16 +179,16 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 226
+  Priority: 256
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 3
+  MinDistance: 0.1
+  MaxDistance: 2
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

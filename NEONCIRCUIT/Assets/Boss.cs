@@ -222,8 +222,12 @@ public class Boss : Enemy
 
     void playSound(AudioClip sound)
     {
-        sasource.clip = sound;
-        sasource.PlayOneShot(sasource.clip);
+        if (!sasource.clip == sound || !sasource.isPlaying)
+        {
+            sasource.Stop();
+            sasource.clip = sound;
+            sasource.PlayOneShot(sasource.clip);
+        }
     }
 
     private void Debuging()

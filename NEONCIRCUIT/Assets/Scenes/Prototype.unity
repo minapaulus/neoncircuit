@@ -1292,6 +1292,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1118654395, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
+      propertyPath: MinDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1138921297758350303, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
       propertyPath: m_Name
       value: Boss level parent
@@ -1956,5 +1960,21 @@ PrefabInstance:
       propertyPath: CheckpointObject
       value: 
       objectReference: {fileID: 281836679}
+    - target: {fileID: 5006212916481068635, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006212916481068635, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006212916481068635, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006212916481068635, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
