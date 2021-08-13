@@ -281,7 +281,10 @@ public class Boss : Enemy
                 BeamPortalOut.SetActive(true);
                 //PortalLogic();
             }
-            playSound(sound_shield2);
+            if (!sasource.isPlaying == sound_shield2)
+            {
+                playSound(sound_shield2);
+            }
         }
 
         if (_anim.GetCurrentAnimatorStateInfo(0).IsName("BeamAttack"))
