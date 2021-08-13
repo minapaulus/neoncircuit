@@ -55,6 +55,7 @@ public class Playerstats : MonoBehaviour
     public GameObject DeathGameUI;
     public Text DeathText;
     public Text TimeText;
+    public AudioListener listener;
 
     private void Awake()
     {
@@ -78,6 +79,7 @@ public class Playerstats : MonoBehaviour
         _ammoSphere = primaryWeaponRendererSphere.gameObject;
         _originalScale = _ammoSphere.transform.localScale;
         SetInitColors();
+        listener.enabled = true;
     }
 
     private void Update()
@@ -158,6 +160,7 @@ public class Playerstats : MonoBehaviour
         {
             deaths++;
             _dead = true;
+            listener.enabled = false;
             SavePlayer();
             DeathGameUI.SetActive(true);
             Cursor.visible = true;
@@ -291,6 +294,7 @@ public class Playerstats : MonoBehaviour
     {
         //is called when Boss is dead.
         succeeded = true;
+        listener.enabled = false;
         SavePlayer();
         DeathText.text = "You died " + deaths.ToString() + " Times.";
         var minutes = (int) (time / 60f);

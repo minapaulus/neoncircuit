@@ -792,7 +792,10 @@ public class Boss : Enemy
                 //Initiate End of Bossfight.
 
                 Instantiate(DeathParticles, transform.position, transform.rotation);
+                sasource.Stop();
+                
                 EndGate.SetActive(true);
+
                 base.Die();
             }
             if (!_secondPhase)
