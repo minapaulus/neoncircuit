@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour
         //ChangeColor(initcolor);
     }
 
-    protected void ChangeAssignedColor(Enemy.AssignedColors newColor)
+    public void ChangeAssignedColor(Enemy.AssignedColors newColor)
     {
         assignedColor = newColor;
         initcolor = ChooseColor(assignedColor);
