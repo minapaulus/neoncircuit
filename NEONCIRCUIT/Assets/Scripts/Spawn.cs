@@ -20,6 +20,7 @@ public class Spawn : MonoBehaviour
         {
             int rand = random.Next(enemyTypes.Count);
             GameObject enemy = Instantiate(enemyTypes[rand], transform.position, Quaternion.identity);
+            
         }
     }
 }

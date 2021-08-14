@@ -100,9 +100,9 @@ public class Generator : MonoBehaviour
         // make world more open
         maze.RemoveSomeWalls();
 
-        for(int i = 0; i < maze.Width; i++)
+        for(int i = 1; i < maze.Width; i++)
         {
-            for(int j = 0; j < maze.Height; j++)
+            for(int j = 1; j < maze.Height; j++)
             {
                 int rand = random.Next(100);
                 if(rand < healthPercentage)
@@ -116,36 +116,13 @@ public class Generator : MonoBehaviour
             }
         }
 
-        /*// random health pickup tiles
-        List<Tuple<int, int>> containedIndices = new List<Tuple<int, int>>();
-        int j = 0;
-        while (j < healthPickupCount)
-        {
-            int x = random.Next(maze.Width - 2);
-            int y = random.Next(maze.Height - 2);
-            Tuple<int, int> temp = new Tuple<int, int>(x, y);
-            for (int k = 0; k < containedIndices.Count; k++)
-            {
-                if (containedIndices[k].Item1 != x || containedIndices[k].Item2 != y)
-                {
-                    containedIndices.Add(temp);
-                    maze[x, y].HasHealthPickup = true;
-                    j++;
-                    break;
-                }
-            }
-            if (containedIndices.Count == 0)
-            {
-                containedIndices.Add(temp);
-                maze[x, y].HasHealthPickup = true;
-                j++;
-            }
-        }*/
-
+        maze[0, 0].HasSpawner = false;
+        maze[1, 0].HasSpawner = false;
+        maze[0, 1].HasSpawner = false;
+        maze[1, 1].HasSpawner = false;
 
         PlacePrefabs(maze);
         CalculateNavmeshsofGameObject();
-        //CalculateNavMeshSurfaces();
     }
 
     void CalculateNavMeshSurfaces()
@@ -184,7 +161,7 @@ public class Generator : MonoBehaviour
 
                 if (maze[x, z].HasHealthPickup)
                 {
-                    Instantiate(prefabHealthPickup, placePos + new Vector3(0.5f * prefabSizeX, 0f, 0.5f * prefabSizeZ), Quaternion.identity);
+                    Instantiate(prefabHealthPickup, placePos + new Vector3(0.5f * prefabSizeX, 1f, 0.5f * prefabSizeZ), Quaternion.identity);
                 }
                 
                 // ENEMIES
