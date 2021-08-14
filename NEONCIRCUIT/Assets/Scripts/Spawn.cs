@@ -18,9 +18,10 @@ public class Spawn : MonoBehaviour
 
         for(int i = 0; i < spawnCount; i++)
         {
-            int rand = random.Next(enemyTypes.Count);
-            GameObject enemy = Instantiate(enemyTypes[rand], transform.position, Quaternion.identity);
-            
+            int randIndex = random.Next(enemyTypes.Count);
+            GameObject enemy = Instantiate(enemyTypes[randIndex], transform.position, Quaternion.identity);
+            int randColor = random.Next(2);
+            enemy.GetComponent<Enemy>().ChangeAssignedColor((Enemy.AssignedColors) randColor);
         }
     }
 }

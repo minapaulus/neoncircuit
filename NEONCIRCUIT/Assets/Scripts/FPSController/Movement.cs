@@ -18,9 +18,13 @@ public class Movement : MonoBehaviour
     public float sphereRadius = 0.4f;
     // only game objects with this layer mask will be included in the collision detection
     public LayerMask groundMask;
-    public float unitsTravelledForReload = 1f;
+    public float unitsTravelledForReloadSecondary = 1f;
+    public float unitsTravelledForReloadPrimary = 1f;
 
-    private float currentlyTravelled = 0f;
+
+    private float currentlyTravelledSecondary = 0f;
+    private float currentlyTravelledPrimary = 0f;
+
     private Vector3 velocity;
     private bool grounded;
     private bool doubleJumped;
@@ -63,8 +67,9 @@ public class Movement : MonoBehaviour
         moveDirection.Normalize();
         moveDirection = movementSpeed * moveDirection + transform.forward * dashVelocity * dash;
         Vector3 temp = moveDirection * Time.deltaTime;
-        currentlyTravelled += Mathf.Abs(temp.x) + Mathf.Abs(temp.z);
-        //Debug.Log(currentlyTravelled);
+        currentlyTravelledSecondary += Mathf.Abs(temp.x) + Mathf.Abs(temp.z);
+        currentlyTravelledPrimary += Mathf.Abs(temp.x) + Mathf.Abs(temp.z);
+
         controller.Move(temp);
 
         // jumping
@@ -92,10 +97,15 @@ public class Movement : MonoBehaviour
 
     private void RefillAmmo()
     {
-        if(currentlyTravelled >= unitsTravelledForReload)
+        if(currentlyTravelledSecondary >= unitsTravelledForReloadSecondary)
         {
             stats.AddSecondary(1f);
-            currentlyTravelled = 0f;
+            currentlyTravelledSecondary = 0f;
+        }
+        if(currentlyTravelledPrimary >= unitsTravelledForReloadPrimary)
+        {
+            stats.AddPrimary(1f);
+            currentlyTravelledPrimary = 0f;
         }
     }
 }
