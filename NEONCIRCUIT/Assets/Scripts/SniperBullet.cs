@@ -49,7 +49,7 @@ public class SniperBullet : Projectile
             var stats = collision.gameObject.GetComponent<Playerstats>();
             stats.AddHP(- base.Damage);
         }
-        Debug.Log(collision.collider.name);
+        //Debug.Log(collision.collider.name);
         Destroy(this.transform.parent.gameObject);
     }
 
