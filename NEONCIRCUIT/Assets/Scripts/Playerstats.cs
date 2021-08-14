@@ -134,7 +134,7 @@ public class Playerstats : MonoBehaviour
 
     public bool CanFireGrenade()
     {
-        return (SecondaryAmmo >= 1);
+        return (SecondaryAmmo >= 2);
     }
 
 

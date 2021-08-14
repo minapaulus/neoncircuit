@@ -20,7 +20,7 @@ public class Spawn : MonoBehaviour
         {
             int randIndex = random.Next(enemyTypes.Count);
             GameObject enemy = Instantiate(enemyTypes[randIndex], transform.position, Quaternion.identity);
-            int randColor = random.Next(2);
+            int randColor = (int) UnityEngine.Random.Range(0, 2);
             enemy.GetComponent<Enemy>().ChangeAssignedColor((Enemy.AssignedColors) randColor);
         }
     }

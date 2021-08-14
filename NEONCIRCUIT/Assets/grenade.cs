@@ -12,9 +12,9 @@ public class grenade : MonoBehaviour
     void Update()
     {
         if(Input.GetMouseButtonDown(1)){
-            if (playerstat.CanFireSecondary())
+            if (playerstat.CanFireGrenade())
             {
-                playerstat.AddSecondary(-1f);
+                playerstat.AddSecondary(-2f);
                 var grenadina = Instantiate(Throwable, transform.position, transform.rotation);
                 grenadina.GetComponent<Rigidbody>().AddForce(transform.forward * throwStrength, ForceMode.VelocityChange);
             }
