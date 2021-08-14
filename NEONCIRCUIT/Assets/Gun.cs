@@ -42,12 +42,17 @@ public class Gun : MonoBehaviour
 
     public void ChangeColor()
     {
-        Debug.Log("Trying to change color");
-        if (color == (Enemy.AssignedColors)2)
+        //Debug.Log("Trying to change color");
+        if (playerstats.primaryColor == (Enemy.AssignedColors)1)
+        {
+            color = (Enemy.AssignedColors)0;
+            playerstats.ChangePrimaryColor(color);
+        }
+        if (playerstats.primaryColor == (Enemy.AssignedColors)0)
         {
             color = (Enemy.AssignedColors)1;
+            playerstats.ChangePrimaryColor(color);
         }
-        else color = (Enemy.AssignedColors)2;
     }
 
     void Shoot()
