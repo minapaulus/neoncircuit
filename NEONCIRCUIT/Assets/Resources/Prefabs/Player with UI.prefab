@@ -1999,12 +1999,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   range: 100
-  costs: 1
+  costs: 2
   cam: {fileID: 4192448781522642060}
   impactEffect: {fileID: 8597481081608407756, guid: f66c0b571c81a1b4fb84bf2890f5fe92, type: 3}
   impactForce: 30
   firetime: 0
-  firerate: 0.3
+  firerate: 0.1
   color: 1
   playerstats: {fileID: 4192448781398043739}
   gsounds:
@@ -2361,7 +2361,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Throwable: {fileID: 6747026259434024, guid: 3a6d575f97e013243ba5d25ebd30529f, type: 3}
-  throwStrength: 30
+  throwStrength: 15
+  playerstat: {fileID: 4192448781398043739}
 --- !u!1 &4192448780752319630
 GameObject:
   m_ObjectHideFlags: 0
