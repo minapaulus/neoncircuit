@@ -107,7 +107,7 @@ public class Generator : MonoBehaviour
         }
 
         List<Edge> mst = Kruskal.GetMinimumSpanningTree(edges, vertices);
-        Grid maze = new Grid(mst, gridSizeX, gridSizeZ, GridSeed);
+        Grid maze = new Grid(mst, gridSizeX, gridSizeZ, this);
 
         // make world more open
         maze.RemoveSomeWalls();
