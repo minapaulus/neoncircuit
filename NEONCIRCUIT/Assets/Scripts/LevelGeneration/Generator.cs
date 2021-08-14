@@ -51,6 +51,9 @@ public class Generator : MonoBehaviour
     private int seed;
     private int gridSeed;
 
+    public int healthPercentage;
+    public int enemyPercentage;
+
     public void Save(string path)
     {
         using (StreamWriter wr = new StreamWriter(path, false))
@@ -102,11 +105,11 @@ public class Generator : MonoBehaviour
             for(int j = 0; j < maze.Height; j++)
             {
                 int rand = random.Next(100);
-                if(rand < 10)
+                if(rand < healthPercentage)
                 {
                     maze[i, j].HasHealthPickup = true;
                 }
-                else if(rand < 30)
+                else if(rand < enemyPercentage)
                 {
                     maze[i, j].HasSpawner = true;
                 }

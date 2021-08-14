@@ -20,7 +20,7 @@ public class Shotgun : MonoBehaviour
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
-        playerstats.ChangePrimaryColor(color);
+        //playerstats.ChangePrimaryColor(color);
         sasource = GetComponent<AudioSource>();
     }
 

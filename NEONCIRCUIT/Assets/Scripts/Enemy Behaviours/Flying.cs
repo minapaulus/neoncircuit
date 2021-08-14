@@ -199,12 +199,19 @@ public class Flying : Enemy
 
     private void CheckForDeath()
     {
-        foreach(GameObject en in Enemies)
+        try
         {
-            if(en == null)
+            foreach (GameObject en in Enemies)
             {
-                Enemies.Remove(en);
+                if (en == null)
+                {
+                    Enemies.Remove(en);
+                }
             }
+        }
+        catch
+        {
+
         }
     }
 

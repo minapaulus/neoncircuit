@@ -219,11 +219,6 @@ Transform:
   m_Father: {fileID: 236143440}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!81 &96076641 stripped
-AudioListener:
-  m_CorrespondingSourceObject: {fileID: 4192448781522642061, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
-  m_PrefabInstance: {fileID: 4192448781449904949}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &194437858
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,6 +438,8 @@ MonoBehaviour:
   surfaces:
   - {fileID: 592913957}
   navmeshObject: {fileID: 745652388}
+  healthPercentage: 10
+  enemyPercentage: 30
 --- !u!4 &309005023
 Transform:
   m_ObjectHideFlags: 0
@@ -1599,6 +1596,8 @@ MonoBehaviour:
   prefabClosed: []
   surfaces: []
   navmeshObject: {fileID: 0}
+  healthPercentage: 0
+  enemyPercentage: 0
 --- !u!4 &1626232032
 Transform:
   m_ObjectHideFlags: 0
@@ -1980,10 +1979,6 @@ PrefabInstance:
       value: Player with UI
       objectReference: {fileID: 0}
     - target: {fileID: 4192448781398043739, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
-      propertyPath: listener
-      value: 
-      objectReference: {fileID: 96076641}
-    - target: {fileID: 4192448781398043739, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
       propertyPath: CheckpointObject
       value: 
       objectReference: {fileID: 281836679}
@@ -2012,6 +2007,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6073056957265413364, guid: 949b5aaa31f006346964c8c8841ad140, type: 3}
+      propertyPath: spawnCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6073056957265413365, guid: 949b5aaa31f006346964c8c8841ad140, type: 3}
       propertyPath: m_Name
       value: Spawner
