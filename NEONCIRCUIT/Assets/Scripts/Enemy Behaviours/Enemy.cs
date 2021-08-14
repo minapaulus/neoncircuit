@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
                 _initcolor = Color.green;
                 break;
             case AssignedColors.Color2:
-                _initcolor = Color.blue;
+                _initcolor = Color.cyan;
                 break;
             case AssignedColors.Color3:
                 _initcolor = Color.red;
