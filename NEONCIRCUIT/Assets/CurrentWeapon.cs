@@ -5,6 +5,7 @@ using UnityEngine;
 public class CurrentWeapon : MonoBehaviour
 {
     public int currentWeapon = 0;
+    private Gun g;
     // Start is called before the first frame update
     void Start()
     {
@@ -12,28 +13,13 @@ public class CurrentWeapon : MonoBehaviour
         {
             transform.GetChild(i).gameObject.SetActive(i == currentWeapon);
         }
+        g = transform.GetChild(0).gameObject.GetComponent<Gun>();
     }
 
     // Update is called once per frame
     void Update()
     {
         int oldweapon = currentWeapon;
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-        {
-            if (currentWeapon >= transform.childCount - 1)
-            {
-                currentWeapon = 0;
-            }
-            else currentWeapon++;
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-        {
-            if (currentWeapon < transform.childCount - 1)
-            {
-                currentWeapon = transform.childCount - 1;
-            }
-            else currentWeapon--;
-        }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             currentWeapon = 0;
@@ -47,6 +33,13 @@ public class CurrentWeapon : MonoBehaviour
             for (int i = 0; i < transform.childCount; i++)
             {
                 transform.GetChild(i).gameObject.SetActive(i == currentWeapon);
+            }
+        }
+        if(currentWeapon == 0)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetAxis("Mouse ScrollWheel") < 0f)
+            {
+                g.ChangeColor();
             }
         }
     }
