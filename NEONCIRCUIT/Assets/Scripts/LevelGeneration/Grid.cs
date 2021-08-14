@@ -56,15 +56,16 @@ public class Grid
         }
     }
 
-    public Grid(List<Edge> mst, int width, int height, int seed)
+    public Grid(List<Edge> mst, int width, int height, Generator gen)
     {
-        if(seed == 0)
+        if(gen.GridSeed == 0)
         {
             Seed = Environment.TickCount;
+            gen.GridSeed = Seed;
         }
         else
         {
-            Seed = seed;
+            Seed = gen.GridSeed;
         }
         random = new Random(Seed);
         this.width = width;
