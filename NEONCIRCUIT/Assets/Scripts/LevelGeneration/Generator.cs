@@ -46,6 +46,7 @@ public class Generator : MonoBehaviour
     public List<GameObject> prefabClosed;
 
     public List<NavMeshSurface> surfaces = new List<NavMeshSurface>();
+    public GameObject navmeshObject;
 
     private int seed;
     private int gridSeed;
@@ -140,12 +141,21 @@ public class Generator : MonoBehaviour
 
 
         PlacePrefabs(maze);
-        CalculateNavMeshSurfaces();
+        CalculateNavmeshsofGameObject();
+        //CalculateNavMeshSurfaces();
     }
 
     void CalculateNavMeshSurfaces()
     {
         foreach(var surface in surfaces)
+        {
+            surface.BuildNavMesh();
+        }
+    }
+
+    void CalculateNavmeshsofGameObject()
+    {
+        foreach(NavMeshSurface surface in navmeshObject.GetComponents<NavMeshSurface>())
         {
             surface.BuildNavMesh();
         }
