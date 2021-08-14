@@ -18,6 +18,8 @@ public class PlayerData
     public float secAmmo;
 
     public int assignedColor;
+    public int seed;
+    public int gridseed;
 
     public PlayerData(Playerstats playerstats)
     {
@@ -39,6 +41,9 @@ public class PlayerData
         playerRot[2] = playerstats.gameObject.transform.rotation.z;
 
         assignedColor = (int) playerstats.CptColor;
+
+        seed = playerstats.seed;
+        gridseed = playerstats.gridseed;
 
 
     }

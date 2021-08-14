@@ -57,6 +57,10 @@ public class Playerstats : MonoBehaviour
     public Text TimeText;
     public AudioListener listener;
 
+    public Generator generator;
+    public int seed;
+    public int gridseed;
+
     private void Awake()
     {
         //Error if none is selected.
@@ -256,6 +260,10 @@ public class Playerstats : MonoBehaviour
                 AddPrimary(0);
                 AddSecondary(0);
             }
+            seed = data.seed;
+            gridseed = data.gridseed;
+            generator.Seed = seed;
+            generator.GridSeed = gridseed;
 
             /*Testzwecke: 
 
@@ -272,6 +280,9 @@ public class Playerstats : MonoBehaviour
     public void SavePlayer()
     {
         //Debug.Log("Save");
+        seed = generator.Seed;
+        gridseed = generator.GridSeed;
+        Debug.Log(seed);
         SaveSystem.SavePlayer(this);
     }
 
