@@ -798,7 +798,7 @@ public class Boss : Enemy
             {
                 //Initiate End of Bossfight.
 
-                Instantiate(DeathParticles, transform.position, transform.rotation);
+                Instantiate(DeathParticles, transform.GetChild(0).position, transform.GetChild(0).rotation);
                 sasource.Stop();
                 
                 EndGate.SetActive(true);
