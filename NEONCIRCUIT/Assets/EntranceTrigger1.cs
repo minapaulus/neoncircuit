@@ -10,7 +10,7 @@ public class EntranceTrigger1 : MonoBehaviour
     private void Start()
     {
         playerstat = GameObject.FindGameObjectWithTag("Player").GetComponent<Playerstats>();
-        Debug.Log(playerstat.gameObject);
+        //Debug.Log(playerstat.gameObject);
     }
     private void OnTriggerEnter(Collider other)
     {

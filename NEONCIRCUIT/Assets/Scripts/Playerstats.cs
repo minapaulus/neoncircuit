@@ -211,6 +211,8 @@ public class Playerstats : MonoBehaviour
         }
 
         primaryUI.material = HoloMaterials[(int)newcolor];
+        SecondaryAmmoCount.material = HoloMaterials[(int)newcolor];
+        HPCount.material = HoloMaterials[(int)newcolor];
         // Change renderer of weapon. 
 
     }
@@ -282,7 +284,7 @@ public class Playerstats : MonoBehaviour
         //Debug.Log("Save");
         seed = generator.Seed;
         gridseed = generator.GridSeed;
-        Debug.Log(seed);
+        //Debug.Log(seed);
         SaveSystem.SavePlayer(this);
     }
 
