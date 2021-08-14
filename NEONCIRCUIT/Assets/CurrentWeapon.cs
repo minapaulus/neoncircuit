@@ -13,7 +13,7 @@ public class CurrentWeapon : MonoBehaviour
         {
             transform.GetChild(i).gameObject.SetActive(i == currentWeapon);
         }
-        g = GameObject.Find("Gun").GetComponent<Gun>();
+        g = transform.GetChild(0).gameObject.GetComponent<Gun>();
     }
 
     // Update is called once per frame
