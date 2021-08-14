@@ -48,8 +48,9 @@ public class Generator : MonoBehaviour
     public List<NavMeshSurface> surfaces = new List<NavMeshSurface>();
     public GameObject navmeshObject;
 
-    private int seed;
-    private int gridSeed;
+    public int Seed = 0;
+
+    public int GridSeed = 0;
 
     public int healthPercentage;
     public int enemyPercentage;
@@ -59,15 +60,18 @@ public class Generator : MonoBehaviour
         using (StreamWriter wr = new StreamWriter(path, false))
         {
             // add other stuff
-            wr.WriteLine(seed);
-            wr.WriteLine(gridSeed);
+            wr.WriteLine(Seed);
+            wr.WriteLine(GridSeed);
         }
     }
 
     void Start()
     {
-        seed = Environment.TickCount;
-        random = new System.Random(seed);
+        if(Seed == 0)
+        {
+            Seed = Environment.TickCount;
+        }
+        random = new System.Random(Seed);
 
         List<Edge> edges = new List<Edge>();
         for (int y = 0; y < gridSizeZ; y++)
@@ -95,7 +99,7 @@ public class Generator : MonoBehaviour
         }
 
         List<Edge> mst = Kruskal.GetMinimumSpanningTree(edges, vertices);
-        Grid maze = new Grid(mst, gridSizeX, gridSizeZ);
+        Grid maze = new Grid(mst, gridSizeX, gridSizeZ, GridSeed);
 
         // make world more open
         maze.RemoveSomeWalls();

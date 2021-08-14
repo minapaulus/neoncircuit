@@ -56,9 +56,16 @@ public class Grid
         }
     }
 
-    public Grid(List<Edge> mst, int width, int height)
+    public Grid(List<Edge> mst, int width, int height, int seed)
     {
-        Seed = Environment.TickCount;
+        if(seed == 0)
+        {
+            Seed = Environment.TickCount;
+        }
+        else
+        {
+            Seed = seed;
+        }
         random = new Random(Seed);
         this.width = width;
         this.height = height;
