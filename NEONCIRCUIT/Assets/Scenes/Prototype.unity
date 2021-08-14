@@ -482,6 +482,8 @@ MonoBehaviour:
   surfaces:
   - {fileID: 592913957}
   navmeshObject: {fileID: 745652388}
+  Seed: 0
+  GridSeed: 0
   healthPercentage: 10
   enemyPercentage: 20
 --- !u!4 &309005023
@@ -1640,6 +1642,8 @@ MonoBehaviour:
   prefabClosed: []
   surfaces: []
   navmeshObject: {fileID: 0}
+  Seed: 0
+  GridSeed: 0
   healthPercentage: 0
   enemyPercentage: 0
 --- !u!4 &1626232032
@@ -2030,6 +2034,10 @@ PrefabInstance:
       propertyPath: firerate
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 4192448781398043739, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
+      propertyPath: generator
+      value: 
+      objectReference: {fileID: 309005022}
     - target: {fileID: 4192448781398043739, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
       propertyPath: CheckpointObject
       value: 
