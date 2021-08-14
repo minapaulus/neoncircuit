@@ -59,9 +59,17 @@ public class Generator : MonoBehaviour
     {
         using (StreamWriter wr = new StreamWriter(path, false))
         {
-            // add other stuff
             wr.WriteLine(Seed);
             wr.WriteLine(GridSeed);
+        }
+    }
+
+    public void Load(string path)
+    {
+        using(StreamReader sr = new StreamReader(path))
+        {
+            Seed = int.Parse(sr.ReadLine());
+            GridSeed = int.Parse(sr.ReadLine());
         }
     }
 
@@ -124,6 +132,8 @@ public class Generator : MonoBehaviour
         maze[1, 0].HasSpawner = false;
         maze[0, 1].HasSpawner = false;
         maze[1, 1].HasSpawner = false;
+
+        Save(@"\map.NEONCIRCUIT");
 
         PlacePrefabs(maze);
         CalculateNavmeshsofGameObject();
