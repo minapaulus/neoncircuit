@@ -31,7 +31,7 @@ public class InGameMenu : MonoBehaviour
             } else
             {
                 StopAllCoroutines();
-                StartCoroutine(ManipulateTime(SlowmoFac));
+                StartCoroutine(ManipulateTime(0));
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 _eSCMenu.SetActive(true);
@@ -60,8 +60,15 @@ public class InGameMenu : MonoBehaviour
         {
             while (Time.timeScale >= target)
             {
-                Time.timeScale -= (1f / slowdownlength) * Time.unscaledDeltaTime;
-                yield return null;
+                if (Time.timeScale - (1f / slowdownlength) * Time.unscaledDeltaTime > 0)
+                {
+                    Time.timeScale -= (1f / slowdownlength) * Time.unscaledDeltaTime;
+                    yield return null;
+                } else
+                {
+                    Time.timeScale = 0f;
+                    yield return null;
+                }
             }
             Time.timeScale = target;
 
