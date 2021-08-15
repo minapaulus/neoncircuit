@@ -8,12 +8,14 @@ public class InGameMenu : MonoBehaviour
     private GameObject _eSCMenu;
     public Playerstats playerstat;
     public float slowdownlength = .5f;
+    public GameObject controls;
 
     public float SlowmoFac = 0.2f;
     // Start is called before the first frame update
     void Start()
     {
         _eSCMenu = transform.GetChild(0).gameObject;
+        controls = GameObject.Find("Controls");
     }
 
     // Update is called once per frame
@@ -36,6 +38,15 @@ public class InGameMenu : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 _eSCMenu.SetActive(true);
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if(controls.activeSelf)
+            {
+                controls.SetActive(false);
+            }
+            else controls.SetActive(true);
         }
 
         if (Input.GetKeyDown(KeyCode.B))
