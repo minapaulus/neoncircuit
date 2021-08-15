@@ -1479,6 +1479,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss level parent
       objectReference: {fileID: 0}
+    - target: {fileID: 2842675129362371065, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
+      propertyPath: hOTValuePerSecond
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 9221581900802795251, guid: a50d51ce378f3244bb42d3f4a11310f2, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2262,8 +2266,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 603108675, guid: 635653a4f4148fa4388c0b7392d25236, type: 3}
       propertyPath: m_Text
-      value: "Control-Tooltip: \nFire Weapon\t-\tLeftMouseClk\nChange Color\t-\tTurn
-        Mousewheel\nThrow Grenade\t-\tRightMouseClk\nTake Shotgun\t-\t2\nTake Rifle\t-\t1\nJump\t\t-
+      value: "Controls: \nFire Weapon\t-\tLeftMouseClk\nChange Color\t-\tTurn Mousewheel\nThrow
+        Grenade\t-\tRightMouseClk\nTake Shotgun\t-\t2\nTake Rifle\t-\t1\nJump\t\t-
         \tSpacebar\nDash\t\t-\tShift\nSlow-Motion\t-\tB\nIngame-Menu\t-\tESC\nOpen/Close
         Controls\t-\tC"
       objectReference: {fileID: 0}
@@ -2342,7 +2346,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 83a0a974ab25a4adfba3cbb3a1aaa76e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.303
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
