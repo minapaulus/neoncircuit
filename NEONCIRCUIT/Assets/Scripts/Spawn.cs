@@ -20,8 +20,9 @@ public class Spawn : MonoBehaviour
         {
             int randIndex = random.Next(enemyTypes.Count);
             GameObject enemy = Instantiate(enemyTypes[randIndex], transform.position, Quaternion.identity);
+            var name = enemy.name;
             int randColor = (int) UnityEngine.Random.Range(0, 2);
-            enemy.GetComponent<Enemy>().ChangeAssignedColor((Enemy.AssignedColors) randColor);
+            enemy.GetComponentInChildren<Enemy>().ChangeAssignedColor((Enemy.AssignedColors)randColor);
         }
     }
 }
