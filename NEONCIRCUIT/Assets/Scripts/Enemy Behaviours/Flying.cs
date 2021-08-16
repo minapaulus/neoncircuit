@@ -235,8 +235,18 @@ public class Flying : Enemy
 
     int SortByDistanceToMe(GameObject a, GameObject b)
     {
-        float squaredRangeA = (a.transform.position - transform.position).sqrMagnitude;
-        float squaredRangeB = (b.transform.position - transform.position).sqrMagnitude;
+        float squaredRangeA;
+        float squaredRangeB;
+        if (a != null)
+        {
+            squaredRangeA = (a.transform.position - transform.position).sqrMagnitude;
+        }
+        else squaredRangeA = 1000000f;
+        if (b != null)
+        {
+            squaredRangeB = (b.transform.position - transform.position).sqrMagnitude;
+        }
+        else squaredRangeB = 1000000f;
         return squaredRangeA.CompareTo(squaredRangeB);
     }
 
